@@ -197,27 +197,27 @@ Propagate the `returnTo` query param from the signin page URL into the form POST
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Build passes: `npm run build`
+- [x] 1.1 Lint passes: `npm run lint` — 692eaf6
+- [x] 1.2 Build passes: `npm run build` — 692eaf6
 
 #### Manual
 
-- [x] 1.3 `/dashboard` logged-out redirects with `?returnTo=%2Fdashboard`
-- [x] 1.4 `/generate` (non-existent) logged-out redirects with `?returnTo=%2Fgenerate`
-- [x] 1.5 Unauthenticated POST to `/api/*` returns HTTP 401 JSON
-- [x] 1.6 Public routes (`/`, `/auth/*`, `/api/auth/*`) load without auth
-- [x] 1.7 Logged-in user accesses `/dashboard` normally, no redirect loop on `/auth/signin`
+- [x] 1.3 `/dashboard` logged-out redirects with `?returnTo=%2Fdashboard` — 692eaf6
+- [x] 1.4 `/generate` (non-existent) logged-out redirects with `?returnTo=%2Fgenerate` — 692eaf6
+- [x] 1.5 Unauthenticated POST to `/api/*` returns HTTP 401 JSON — 692eaf6
+- [x] 1.6 Public routes (`/`, `/auth/*`, `/api/auth/*`) load without auth — 692eaf6
+- [x] 1.7 Logged-in user accesses `/dashboard` normally, no redirect loop on `/auth/signin` — 692eaf6
 
 ### Phase 2: Thread returnTo Through Signin Flow
 
 #### Automated
 
-- [ ] 2.1 Lint passes: `npm run lint`
-- [ ] 2.2 Build passes: `npm run build`
+- [x] 2.1 Lint passes: `npm run lint`
+- [x] 2.2 Build passes: `npm run build`
 
 #### Manual
 
-- [ ] 2.3 Full flow: log out → visit `/dashboard` → sign in → land on `/dashboard`
-- [ ] 2.4 Open-redirect blocked: `?returnTo=//evil.com` → land on `/`
-- [ ] 2.5 Open-redirect blocked: `?returnTo=https://evil.com` → land on `/`
-- [ ] 2.6 Direct signin (no `returnTo`) → land on `/`
+- [x] 2.3 Full flow: log out → visit `/dashboard` → sign in → land on `/dashboard`
+- [x] 2.4 Open-redirect blocked: `?returnTo=//evil.com` → land on `/`
+- [x] 2.5 Open-redirect blocked: `?returnTo=https://evil.com` → land on `/`
+- [x] 2.6 Direct signin (no `returnTo`) → land on `/`

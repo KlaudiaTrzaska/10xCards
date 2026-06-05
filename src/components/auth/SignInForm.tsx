@@ -7,9 +7,10 @@ import { ServerError } from "@/components/auth/ServerError";
 
 interface Props {
   serverError?: string | null;
+  returnTo?: string;
 }
 
-export default function SignInForm({ serverError }: Props) {
+export default function SignInForm({ serverError, returnTo }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -77,6 +78,7 @@ export default function SignInForm({ serverError }: Props) {
         }
       />
 
+      <input type="hidden" name="returnTo" value={returnTo ?? "/"} />
       <ServerError message={serverError} />
 
       <SubmitButton pendingText="Signing in..." icon={<LogIn className="size-4" />}>
