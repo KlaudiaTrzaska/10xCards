@@ -1,0 +1,36 @@
+---
+description: Prevents spawning subagents for web research; enforces direct WebSearch/WebFetch in parent agent
+alwaysApply: true
+---
+
+# Web Research — No Subagents
+
+**Never** spawn Task subagents (`subagent_type: generalPurpose` or any other type) whose primary purpose is fetching URLs or running web searches. Subagents inherit sandbox restrictions and will silently block on outbound network calls, producing empty transcripts and no output.
+
+## Rule
+
+Web research **must** run in the parent agent using `WebSearch` or `WebFetch` directly.
+
+```
+❌ BAD — spawns 6 subagents to search the web in parallel
+Task("Research Cloudflare pricing", prompt="Search the web for...")
+Task("Research Vercel pricing",     prompt="Search the web for...")
+
+✅ GOOD — parent agent runs searches directly in parallel
+WebSearch("Cloudflare Workers pricing 2026")
+WebSearch("Vercel pricing 2026")
+```
+
+Batch a maximum of **3 WebSearch / WebFetch calls per message** to avoid rate-limiting.
+
+## When subagents ARE appropriate
+
+Use Task subagents only for work that does **not** require outbound network:
+
+- File system analysis, code search, codebase exploration
+- Shell commands (git, npm, build tools)
+- Read-only code review or synthesis of already-fetched content
+
+## Exception: Shell + full_network
+
+If a subagent must fetch a URL as a side-effect of a larger task (not its primary purpose), it must use the `Shell` tool with `required_permissions: ["full_network"]` and `curl` — never rely on `WebSearch`/`WebFetch` inside a subagent.
