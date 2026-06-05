@@ -212,12 +212,12 @@ Propagate the `returnTo` query param from the signin page URL into the form POST
 
 #### Automated
 
-- [x] 2.1 Lint passes: `npm run lint`
-- [x] 2.2 Build passes: `npm run build`
+- [x] 2.1 Lint passes: `npm run lint` — 1e66647
+- [x] 2.2 Build passes: `npm run build` — 1e66647
 
 #### Manual
 
-- [x] 2.3 Full flow: log out → visit `/dashboard` → sign in → land on `/dashboard`
-- [x] 2.4 Open-redirect blocked: `?returnTo=//evil.com` → land on `/`
-- [x] 2.5 Open-redirect blocked: `?returnTo=https://evil.com` → land on `/`
-- [x] 2.6 Direct signin (no `returnTo`) → land on `/`
+- [x] 2.3 Full flow: log out → visit `/dashboard` → sign in → land on `/dashboard` — 1e66647
+- [x] 2.4 Open-redirect blocked: `?returnTo=//evil.com` → land on `/` — 1e66647
+- [x] 2.5 Open-redirect blocked: `?returnTo=https://evil.com` → land on `/` — 1e66647
+- [x] 2.6 Direct signin (no `returnTo`) → land on `/` — 1e66647
