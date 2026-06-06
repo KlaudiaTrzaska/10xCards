@@ -518,25 +518,25 @@ The migration is additive only — no existing data is touched. `supabase db res
 
 #### Automated
 
-- [x] 2.1 Lint passes: `npm run lint`
-- [x] 2.2 Build passes: `npm run build`
-- [x] 2.3 Migration applies cleanly: `npx supabase migration up`
+- [x] 2.1 Lint passes: `npm run lint` — 2f15fd5
+- [x] 2.2 Build passes: `npm run build` — 2f15fd5
+- [x] 2.3 Migration applies cleanly: `npx supabase migration up` — 2f15fd5
 
 #### Manual
 
-- [x] 2.4 `generations` and `flashcards` tables visible in Supabase Studio with RLS enabled
-- [x] 2.5 Authenticated INSERT and SELECT succeed; unauthenticated request rejected
+- [x] 2.4 `generations` and `flashcards` tables visible in Supabase Studio with RLS enabled — 2f15fd5
+- [x] 2.5 Authenticated INSERT and SELECT succeed; unauthenticated request rejected — 2f15fd5
 
 ### Phase 3: Generation Service
 
 #### Automated
 
-- [ ] 3.1 Lint passes: `npm run lint`
-- [ ] 3.2 Build passes: `npm run build`
+- [x] 3.1 Lint passes: `npm run lint`
+- [x] 3.2 Build passes: `npm run build`
 
 #### Manual
 
-- [ ] 3.3 Direct call to `generateCards` with valid API key returns `{ front, back }[]`
+- [x] 3.3 Direct call to `generateCards` with valid API key returns `{ front, back }[]`
 
 ### Phase 4: API Route
 
