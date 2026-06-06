@@ -506,26 +506,26 @@ The migration is additive only — no existing data is touched. `supabase db res
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Build passes: `npm run build`
+- [x] 1.1 Lint passes: `npm run lint` — 55ace21
+- [x] 1.2 Build passes: `npm run build` — 55ace21
 
 #### Manual
 
-- [x] 1.3 App starts without `OPENROUTER_API_KEY` — banner appears
-- [x] 1.4 App starts with `OPENROUTER_API_KEY` — no OpenRouter banner
+- [x] 1.3 App starts without `OPENROUTER_API_KEY` — banner appears — 55ace21
+- [x] 1.4 App starts with `OPENROUTER_API_KEY` — no OpenRouter banner — 55ace21
 
 ### Phase 2: Database Migration & Shared Types
 
 #### Automated
 
-- [ ] 2.1 Lint passes: `npm run lint`
-- [ ] 2.2 Build passes: `npm run build`
-- [ ] 2.3 Migration applies cleanly: `npx supabase migration up`
+- [x] 2.1 Lint passes: `npm run lint`
+- [x] 2.2 Build passes: `npm run build`
+- [x] 2.3 Migration applies cleanly: `npx supabase migration up`
 
 #### Manual
 
-- [ ] 2.4 `generations` and `flashcards` tables visible in Supabase Studio with RLS enabled
-- [ ] 2.5 Authenticated INSERT and SELECT succeed; unauthenticated request rejected
+- [x] 2.4 `generations` and `flashcards` tables visible in Supabase Studio with RLS enabled
+- [x] 2.5 Authenticated INSERT and SELECT succeed; unauthenticated request rejected
 
 ### Phase 3: Generation Service
 
