@@ -542,8 +542,8 @@ The migration is additive only — no existing data is touched. `supabase db res
 
 #### Automated
 
-- [ ] 4.1 Lint passes: `npm run lint`
-- [ ] 4.2 Build passes: `npm run build`
+- [x] 4.1 Lint passes: `npm run lint` — 9d4a003
+- [x] 4.2 Build passes: `npm run build` — 9d4a003
 
 #### Manual
 
