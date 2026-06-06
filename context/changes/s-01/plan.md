@@ -531,12 +531,12 @@ The migration is additive only — no existing data is touched. `supabase db res
 
 #### Automated
 
-- [x] 3.1 Lint passes: `npm run lint`
-- [x] 3.2 Build passes: `npm run build`
+- [x] 3.1 Lint passes: `npm run lint` — 8635988
+- [x] 3.2 Build passes: `npm run build` — 8635988
 
 #### Manual
 
-- [x] 3.3 Direct call to `generateCards` with valid API key returns `{ front, back }[]`
+- [x] 3.3 Direct call to `generateCards` with valid API key returns `{ front, back }[]` — 8635988
 
 ### Phase 4: API Route
 
