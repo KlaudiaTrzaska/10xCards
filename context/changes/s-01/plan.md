@@ -547,11 +547,11 @@ The migration is additive only — no existing data is touched. `supabase db res
 
 #### Manual
 
-- [ ] 4.3 Unauthenticated POST → `401`
-- [ ] 4.4 Valid auth + valid body → `200`, rows in Supabase Studio
-- [ ] 4.5 Body with `sourceText` < 50 chars → `400`
-- [ ] 4.6 Body with invalid `count` → `400`
-- [ ] 4.7 Missing API key → `502 {"error":"Generation failed"}`
+- [x] 4.3 Unauthenticated POST → `401`
+- [x] 4.4 Valid auth + valid body → `200`, rows in Supabase Studio
+- [x] 4.5 Body with `sourceText` < 50 chars → `400`
+- [x] 4.6 Body with invalid `count` → `400`
+- [x] 4.7 Missing API key → `502 {"error":"Generation failed"}`
 
 ### Phase 5: Generate Page & UI
 
@@ -562,9 +562,9 @@ The migration is additive only — no existing data is touched. `supabase db res
 
 #### Manual
 
-- [ ] 5.3 Logged-out visit to `/generate` → redirect to sign-in with `returnTo` → lands on `/generate` after sign-in
-- [ ] 5.4 Logged-in: page loads with form
-- [ ] 5.5 < 50 chars → client-side validation error, no network request
-- [ ] 5.6 Valid input → spinner during generation → draft cards appear below form
-- [ ] 5.7 Missing API key → layout banner visible + error on submit
-- [ ] 5.8 OpenRouter error → user-visible error message
+- [x] 5.3 Logged-out visit to `/generate` → redirect to sign-in with `returnTo` → lands on `/generate` after sign-in
+- [x] 5.4 Logged-in: page loads with form
+- [x] 5.5 < 50 chars → client-side validation error, no network request
+- [x] 5.6 Valid input → spinner during generation → draft cards appear below form
+- [x] 5.7 Missing API key → layout banner visible + error on submit
+- [x] 5.8 OpenRouter error → user-visible error message

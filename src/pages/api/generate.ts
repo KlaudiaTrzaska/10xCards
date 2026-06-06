@@ -48,8 +48,12 @@ export const POST: APIRoute = async (context) => {
     candidates = await generateCards(sourceText, count, OPENROUTER_API_KEY);
   } catch (err) {
     if (err instanceof GenerationError) {
-      return json({ error: "Generation failed" }, 502);
+      // eslint-disable-next-line no-console
+      console.error("[generate] GenerationError:", err.message, err.cause);
+      return json({ error: `Generation failed: ${err.message}` }, 502);
     }
+    // eslint-disable-next-line no-console
+    console.error("[generate] Unexpected error:", err);
     return json({ error: "Unexpected error during generation" }, 500);
   }
 
