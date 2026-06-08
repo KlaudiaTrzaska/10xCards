@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Sparkles, CircleAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { Flashcard } from "@/types";
+import type { Flashcard, GenerateResponseDTO } from "@/types";
+import CurationPanel from "@/components/generation/CurationPanel";
 
 type Count = 5 | 10 | 15;
 
@@ -16,6 +17,7 @@ export default function GenerateForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cards, setCards] = useState<Flashcard[] | null>(null);
+  const [generationId, setGenerationId] = useState<string | null>(null);
 
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,12 +42,13 @@ export default function GenerateForm() {
         body: JSON.stringify({ sourceText, count }),
       });
 
-      const data = (await res.json()) as { cards?: Flashcard[]; error?: string };
+      const data = (await res.json()) as GenerateResponseDTO & { error?: string };
 
       if (!res.ok) {
         setError(data.error ?? "Something went wrong. Please try again.");
       } else {
-        setCards(data.cards ?? []);
+        setCards(data.cards);
+        setGenerationId(data.generationId);
       }
     } catch {
       setError("Network error — please check your connection and try again.");
@@ -140,36 +143,16 @@ export default function GenerateForm() {
         </Button>
       </form>
 
-      {/* Draft card list */}
-      {cards !== null && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-semibold text-white">
-            Generated {cards.length} draft {cards.length === 1 ? "card" : "cards"}
-          </h2>
-          {cards.length === 0 ? (
-            <p className="text-sm text-white/50">No cards were returned. Try with more detailed material.</p>
-          ) : (
-            <ul className="space-y-3">
-              {cards.map((card, i) => (
-                <li key={card.id} className="rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm">
-                  <span className="mb-1 block text-xs font-semibold tracking-widest text-purple-300/70 uppercase">
-                    Card {i + 1}
-                  </span>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div>
-                      <p className="mb-1 text-xs text-white/40">Front</p>
-                      <p className="text-sm text-white">{card.front}</p>
-                    </div>
-                    <div className="sm:border-l sm:border-white/10 sm:pl-3">
-                      <p className="mb-1 text-xs text-white/40">Back</p>
-                      <p className="text-sm text-white/80">{card.back}</p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
+      {/* Curation panel */}
+      {cards !== null && generationId !== null && (
+        <CurationPanel
+          cards={cards}
+          generationId={generationId}
+          onReset={() => {
+            setCards(null);
+            setGenerationId(null);
+          }}
+        />
       )}
     </div>
   );

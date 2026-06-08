@@ -357,8 +357,8 @@ No DB migration required. The existing `flashcards` table and its `status` CHECK
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Build passes: `npm run build`
+- [x] 1.1 Lint passes: `npm run lint` — a8e4c8a
+- [x] 1.2 Build passes: `npm run build` — a8e4c8a
 
 #### Manual
 
@@ -370,16 +370,16 @@ No DB migration required. The existing `flashcards` table and its `status` CHECK
 
 #### Automated
 
-- [ ] 2.1 Lint passes: `npm run lint`
-- [ ] 2.2 Build passes: `npm run build`
+- [x] 2.1 Lint passes: `npm run lint`
+- [x] 2.2 Build passes: `npm run build`
 
 #### Manual
 
-- [ ] 2.3 Curation panel appears after generation with Accept / Edit / Discard per card
-- [ ] 2.4 Accept / Edit / Discard controls update visual state and Save button count
-- [ ] 2.5 Save button disabled when 0 cards accepted or edited
-- [ ] 2.6 Save fires correct API payload; navigates to `/dashboard?saved=N`
-- [ ] 2.7 Save error shows inline; decisions preserved; retry succeeds
+- [x] 2.3 Curation panel appears after generation with Accept / Edit / Discard per card
+- [x] 2.4 Accept / Edit / Discard controls update visual state and Save button count
+- [x] 2.5 Save button disabled when 0 cards accepted or edited
+- [x] 2.6 Save fires correct API payload; navigates to `/dashboard?saved=N`
+- [x] 2.7 Save error shows inline; decisions preserved; retry succeeds
 
 ### Phase 3: Post-Save Dashboard Feedback
 
