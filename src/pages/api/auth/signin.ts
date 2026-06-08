@@ -5,6 +5,8 @@ export const POST: APIRoute = async (context) => {
   const form = await context.request.formData();
   const email = form.get("email") as string;
   const password = form.get("password") as string;
+  const rawReturnTo = form.get("returnTo") as string | null;
+  const returnTo = rawReturnTo && rawReturnTo.startsWith("/") && !rawReturnTo.startsWith("//") ? rawReturnTo : "/";
 
   const supabase = createClient(context.request.headers, context.cookies);
   if (!supabase) {
@@ -16,5 +18,5 @@ export const POST: APIRoute = async (context) => {
     return context.redirect(`/auth/signin?error=${encodeURIComponent(error.message)}`);
   }
 
-  return context.redirect("/");
+  return context.redirect(returnTo);
 };
