@@ -362,9 +362,9 @@ No DB migration required. The existing `flashcards` table and its `status` CHECK
 
 #### Manual
 
-- [ ] 1.3 Unauthenticated POST → `401`
-- [ ] 1.4 Valid payload (accepted, edited, discarded) → `200 { savedCount: N }`; DB rows updated/deleted correctly
-- [ ] 1.5 Payload with empty accepted+edited → `400`
+- [x] 1.3 Unauthenticated POST → `401`
+- [x] 1.4 Valid payload (accepted, edited, discarded) → `200 { savedCount: N }`; DB rows updated/deleted correctly
+- [x] 1.5 Payload with empty accepted+edited → `400`
 
 ### Phase 2: Curation UI
 
