@@ -44,6 +44,13 @@ const savedCount = parseInt(Astro.url.searchParams.get("saved") ?? "0", 10) || 0
           </button>
         </form>
       </div>
+      <a
+        href="/deck"
+        class="block rounded-2xl border border-white/10 bg-white/10 p-6 text-center text-white backdrop-blur-xl transition-colors hover:bg-white/15"
+      >
+        <h2 class="mb-1 text-lg font-semibold">My Deck</h2>
+        <p class="text-sm text-blue-100/60">Browse, create, edit and delete your flashcards</p>
+      </a>
     </div>
   </div>
 </Layout>
