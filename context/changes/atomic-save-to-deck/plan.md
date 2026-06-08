@@ -370,28 +370,28 @@ No DB migration required. The existing `flashcards` table and its `status` CHECK
 
 #### Automated
 
-- [x] 2.1 Lint passes: `npm run lint`
-- [x] 2.2 Build passes: `npm run build`
+- [x] 2.1 Lint passes: `npm run lint` — 9dd7a9f
+- [x] 2.2 Build passes: `npm run build` — 9dd7a9f
 
 #### Manual
 
-- [x] 2.3 Curation panel appears after generation with Accept / Edit / Discard per card
-- [x] 2.4 Accept / Edit / Discard controls update visual state and Save button count
-- [x] 2.5 Save button disabled when 0 cards accepted or edited
-- [x] 2.6 Save fires correct API payload; navigates to `/dashboard?saved=N`
-- [x] 2.7 Save error shows inline; decisions preserved; retry succeeds
+- [x] 2.3 Curation panel appears after generation with Accept / Edit / Discard per card — 9dd7a9f
+- [x] 2.4 Accept / Edit / Discard controls update visual state and Save button count — 9dd7a9f
+- [x] 2.5 Save button disabled when 0 cards accepted or edited — 9dd7a9f
+- [x] 2.6 Save fires correct API payload; navigates to `/dashboard?saved=N` — 9dd7a9f
+- [x] 2.7 Save error shows inline; decisions preserved; retry succeeds — 9dd7a9f
 
 ### Phase 3: Post-Save Dashboard Feedback
 
 #### Automated
 
-- [ ] 3.1 Lint passes: `npm run lint`
-- [ ] 3.2 Build passes: `npm run build`
+- [x] 3.1 Lint passes: `npm run lint`
+- [x] 3.2 Build passes: `npm run build`
 
 #### Manual
 
-- [ ] 3.3 `/dashboard?saved=5` shows "✓ 5 cards saved to your deck" banner
-- [ ] 3.4 `/dashboard` (no param) shows no banner
-- [ ] 3.5 `/dashboard?saved=0` shows no banner
-- [ ] 3.6 Clicking dismiss removes the banner without a page reload
-- [ ] 3.7 Full end-to-end flow: generate → curate → save → dashboard banner with correct count
+- [x] 3.3 `/dashboard?saved=5` shows "✓ 5 cards saved to your deck" banner
+- [x] 3.4 `/dashboard` (no param) shows no banner
+- [x] 3.5 `/dashboard?saved=0` shows no banner
+- [x] 3.6 Clicking dismiss removes the banner without a page reload
+- [x] 3.7 Full end-to-end flow: generate → curate → save → dashboard banner with correct count
