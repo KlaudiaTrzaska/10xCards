@@ -3,6 +3,7 @@ import { z } from "zod";
 import { OPENROUTER_API_KEY } from "astro:env/server";
 import { createClient } from "@/lib/supabase";
 import { generateCards, GenerationError } from "@/lib/services/generation";
+import { json } from "@/lib/api-utils";
 import type { GenerateResponseDTO } from "@/types";
 
 export const prerender = false;
@@ -11,13 +12,6 @@ const RequestSchema = z.object({
   sourceText: z.string().min(50).max(10_000),
   count: z.union([z.literal(5), z.literal(10), z.literal(15)]),
 });
-
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { "Content-Type": "application/json" },
-  });
-}
 
 export const POST: APIRoute = async (context) => {
   if (!OPENROUTER_API_KEY) {

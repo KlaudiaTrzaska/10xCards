@@ -31,6 +31,19 @@ export interface GenerateResponseDTO {
   cards: Flashcard[];
 }
 
+// Input to POST /api/save-deck
+export interface SaveCurationRequestDTO {
+  generationId: string;
+  accepted: string[]; // card IDs to mark status='accepted'
+  edited: { id: string; front: string; back: string }[]; // cards to update content + mark accepted
+  discarded: string[]; // card IDs to hard-delete
+}
+
+// Response from POST /api/save-deck
+export interface SaveCurationResponseDTO {
+  savedCount: number; // accepted.length + edited.length
+}
+
 // Supabase Database type — keeps table operations fully typed without generated types
 export interface Database {
   public: {
