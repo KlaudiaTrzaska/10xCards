@@ -513,8 +513,8 @@ Pagination cap at 20 cards per page keeps the `flashcards` SELECT payload small 
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Build passes: `npm run build`
+- [x] 1.1 Lint passes: `npm run lint` — a6abf4a
+- [x] 1.2 Build passes: `npm run build` — a6abf4a
 - [ ] 1.3 Migration applies cleanly: `npx supabase migration up`
 
 #### Manual
@@ -527,8 +527,8 @@ Pagination cap at 20 cards per page keeps the `flashcards` SELECT payload small 
 
 #### Automated
 
-- [x] 2.1 Lint passes: `npm run lint`
-- [x] 2.2 Build passes: `npm run build`
+- [x] 2.1 Lint passes: `npm run lint` — a6abf4a
+- [x] 2.2 Build passes: `npm run build` — a6abf4a
 
 #### Manual
 
@@ -545,8 +545,8 @@ Pagination cap at 20 cards per page keeps the `flashcards` SELECT payload small 
 
 #### Automated
 
-- [x] 3.1 Lint passes: `npm run lint`
-- [x] 3.2 Build passes: `npm run build`
+- [x] 3.1 Lint passes: `npm run lint` — a6abf4a
+- [x] 3.2 Build passes: `npm run build` — a6abf4a
 
 #### Manual
 
@@ -554,7 +554,7 @@ Pagination cap at 20 cards per page keeps the `flashcards` SELECT payload small 
 - [ ] 3.4 Empty state renders with "Add Card" button
 - [ ] 3.5 Create card via modal → appears in list
 - [ ] 3.6 Edit card via modal → change persists after reload
-- [ ] 3.7 Delete card with confirm → card removed from list
+- [x] 3.7 Delete card with confirm → card removed from list — a6abf4a
 - [ ] 3.8 Pagination: 21+ cards → page 1 shows 20; Next/Previous works
 - [ ] 3.9 Locked card shows lock badge; Edit/Delete disabled
 - [ ] 3.10 Save error modal shows inline error and stays open
@@ -563,8 +563,8 @@ Pagination cap at 20 cards per page keeps the `flashcards` SELECT payload small 
 
 #### Automated
 
-- [x] 4.1 Lint passes: `npm run lint`
-- [x] 4.2 Build passes: `npm run build`
+- [x] 4.1 Lint passes: `npm run lint` — a6abf4a
+- [x] 4.2 Build passes: `npm run build` — a6abf4a
 
 #### Manual
 
