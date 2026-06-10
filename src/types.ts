@@ -18,6 +18,16 @@ export interface Flashcard {
   status: FlashcardStatus;
   created_at: string;
   first_reviewed_at: string | null;
+  // FSRS scheduling fields — null when card has never been reviewed
+  fsrs_due: string | null;
+  fsrs_stability: number | null;
+  fsrs_difficulty: number | null;
+  fsrs_scheduled_days: number | null;
+  fsrs_learning_steps: number | null;
+  fsrs_reps: number | null;
+  fsrs_lapses: number | null;
+  fsrs_state: number | null;
+  fsrs_last_review: string | null;
 }
 
 // Input to POST /api/generate
@@ -70,6 +80,58 @@ export interface CardMutationResponseDTO {
   card: Flashcard;
 }
 
+// Review outcome grades mapping to FSRS ratings 1–4
+export type ReviewOutcome = "again" | "hard" | "good" | "easy";
+
+// A single review log entry (append-only)
+export interface ReviewLog {
+  id: string;
+  user_id: string;
+  card_id: string;
+  rating: number;
+  state: number;
+  stability: number;
+  difficulty: number;
+  scheduled_days: number;
+  reviewed_at: string;
+}
+
+// Card fields returned to the study session (subset of Flashcard)
+export type StudyCardDTO = Pick<
+  Flashcard,
+  | "id"
+  | "front"
+  | "back"
+  | "first_reviewed_at"
+  | "fsrs_due"
+  | "fsrs_stability"
+  | "fsrs_difficulty"
+  | "fsrs_scheduled_days"
+  | "fsrs_learning_steps"
+  | "fsrs_reps"
+  | "fsrs_lapses"
+  | "fsrs_state"
+  | "fsrs_last_review"
+>;
+
+// Response from GET /api/study/due
+export interface StudyDueResponseDTO {
+  cards: StudyCardDTO[];
+  total_due: number;
+}
+
+// Input to POST /api/study/review
+export interface SubmitReviewRequestDTO {
+  cardId: string;
+  outcome: ReviewOutcome;
+}
+
+// Response from POST /api/study/review
+export interface SubmitReviewResponseDTO {
+  scheduledFor: string;
+  outcome: ReviewOutcome;
+}
+
 // Supabase Database type — keeps table operations fully typed without generated types
 export interface Database {
   public: {
@@ -111,6 +173,15 @@ export interface Database {
           status: "draft" | "accepted";
           created_at: string;
           first_reviewed_at: string | null;
+          fsrs_due: string | null;
+          fsrs_stability: number | null;
+          fsrs_difficulty: number | null;
+          fsrs_scheduled_days: number | null;
+          fsrs_learning_steps: number | null;
+          fsrs_reps: number | null;
+          fsrs_lapses: number | null;
+          fsrs_state: number | null;
+          fsrs_last_review: string | null;
         };
         Insert: {
           id?: string;
@@ -121,6 +192,15 @@ export interface Database {
           status?: "draft" | "accepted";
           created_at?: string;
           first_reviewed_at?: string | null;
+          fsrs_due?: string | null;
+          fsrs_stability?: number | null;
+          fsrs_difficulty?: number | null;
+          fsrs_scheduled_days?: number | null;
+          fsrs_learning_steps?: number | null;
+          fsrs_reps?: number | null;
+          fsrs_lapses?: number | null;
+          fsrs_state?: number | null;
+          fsrs_last_review?: string | null;
         };
         Update: {
           id?: string;
@@ -131,7 +211,42 @@ export interface Database {
           status?: "draft" | "accepted";
           created_at?: string;
           first_reviewed_at?: string | null;
+          fsrs_due?: string | null;
+          fsrs_stability?: number | null;
+          fsrs_difficulty?: number | null;
+          fsrs_scheduled_days?: number | null;
+          fsrs_learning_steps?: number | null;
+          fsrs_reps?: number | null;
+          fsrs_lapses?: number | null;
+          fsrs_state?: number | null;
+          fsrs_last_review?: string | null;
         };
+        Relationships: [];
+      };
+      review_logs: {
+        Row: {
+          id: string;
+          user_id: string;
+          card_id: string;
+          rating: number;
+          state: number;
+          stability: number;
+          difficulty: number;
+          scheduled_days: number;
+          reviewed_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          card_id: string;
+          rating: number;
+          state: number;
+          stability: number;
+          difficulty: number;
+          scheduled_days: number;
+          reviewed_at?: string;
+        };
+        Update: Record<never, never>;
         Relationships: [];
       };
     };
