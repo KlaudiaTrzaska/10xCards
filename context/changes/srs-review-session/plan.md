@@ -440,10 +440,10 @@ All FSRS columns added in Phase 1 are nullable with no `DEFAULT` values. Existin
 
 #### Manual
 
-- [ ] 2.3 GET /api/study/due returns 200 with cards array and total_due
-- [ ] 2.4 POST /api/study/review returns 200; FSRS columns updated; review_logs row created; first_reviewed_at set on first grade and unchanged on second
-- [ ] 2.5 401 returned for unauthenticated requests to both routes
-- [ ] 2.6 400 returned for invalid outcome value; 404 for unknown or foreign cardId
+- [x] 2.3 GET /api/study/due returns 200 with cards array and total_due
+- [x] 2.4 POST /api/study/review returns 200; FSRS columns updated; review_logs row created; first_reviewed_at set on first grade and unchanged on second
+- [x] 2.5 401 returned for unauthenticated requests to both routes
+- [x] 2.6 400 returned for invalid outcome value; 404 for unknown or foreign cardId
 
 ### Phase 3: Study UI and Navigation
 
@@ -454,11 +454,11 @@ All FSRS columns added in Phase 1 are nullable with no `DEFAULT` values. Existin
 
 #### Manual
 
-- [ ] 3.3 Full session: flip works; all four grades submit successfully; FSRS columns updated after each grade
-- [ ] 3.4 first_reviewed_at set after first grade; PATCH/DELETE on that card returns 403
-- [ ] 3.5 Session complete: inline summary with grade counts; Back to Deck navigates to /deck
-- [ ] 3.6 Empty state (no accepted cards): message with link to /generate
-- [ ] 3.7 Empty state (no due cards): "All caught up" message with next-review timestamp
-- [ ] 3.8 Study link in Topbar; Study card on Home; Start Study button on Deck page
-- [ ] 3.9 Network error on grade: toast shown, card and grade buttons remain active, re-grade succeeds
-- [ ] 3.10 Unauthenticated /study redirects to sign-in
+- [x] 3.3 Full session: flip works; all four grades submit successfully; FSRS columns updated after each grade
+- [x] 3.4 first_reviewed_at set after first grade; PATCH/DELETE on that card returns 403
+- [x] 3.5 Session complete: inline summary with grade counts; Back to Deck navigates to /deck
+- [x] 3.6 Empty state (no accepted cards): message with link to /generate
+- [x] 3.7 Empty state (no due cards): "All caught up" message with next-review timestamp
+- [x] 3.8 Study link in Topbar; Study card on Home; Start Study button on Deck page
+- [x] 3.9 Network error on grade: toast shown, card and grade buttons remain active, re-grade succeeds
+- [x] 3.10 Unauthenticated /study redirects to sign-in
