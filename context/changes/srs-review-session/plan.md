@@ -435,8 +435,8 @@ All FSRS columns added in Phase 1 are nullable with no `DEFAULT` values. Existin
 
 #### Automated
 
-- [x] 2.1 npm run lint passes
-- [x] 2.2 npm run build passes
+- [x] 2.1 npm run lint passes — 2edf732
+- [x] 2.2 npm run build passes — 2edf732
 
 #### Manual
 
@@ -449,8 +449,8 @@ All FSRS columns added in Phase 1 are nullable with no `DEFAULT` values. Existin
 
 #### Automated
 
-- [ ] 3.1 npm run lint passes
-- [ ] 3.2 npm run build passes
+- [x] 3.1 npm run lint passes — 2edf732
+- [x] 3.2 npm run build passes — 2edf732
 
 #### Manual
 
