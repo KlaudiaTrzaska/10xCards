@@ -18,6 +18,10 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const pathname = context.url.pathname;
   const isPublic = pathname === "/" || PUBLIC_ROUTES.some((r) => pathname.startsWith(r));
 
+  if (pathname === "/" && context.locals.user) {
+    return context.redirect("/home");
+  }
+
   if (!isPublic && !context.locals.user) {
     if (pathname.startsWith("/api/")) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {

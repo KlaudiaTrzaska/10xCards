@@ -1,0 +1,50 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Topbar from "@/components/Topbar.astro";
+
+const { user } = Astro.locals;
+---
+
+<Layout title="10xCards — Home">
+  <div class="bg-cosmic relative min-h-screen w-full overflow-hidden">
+    <div
+      class="pointer-events-none absolute top-1/4 -left-24 h-[350px] w-[350px] rounded-full bg-purple-500/20 blur-[120px]"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute top-2/3 -right-16 h-[250px] w-[250px] rounded-full bg-blue-500/15 blur-[100px]"
+    >
+    </div>
+
+    <div class="relative z-10 p-4 sm:p-8">
+      <Topbar />
+
+      <div class="mx-auto flex max-w-2xl flex-col items-center justify-center px-4 py-24 text-center">
+        <div class="w-full rounded-2xl border border-white/10 bg-white/10 px-8 py-12 backdrop-blur-xl">
+          <h1 class="mb-3 text-2xl font-bold text-white sm:text-3xl">
+            Welcome, <span class="bg-gradient-to-r from-blue-200 to-purple-200 bg-clip-text text-transparent"
+              >{user?.email}</span
+            >
+          </h1>
+          <p class="mb-8 text-base text-blue-100/70">
+            Paste text and generate flashcards — AI will suggest cards for your deck.
+          </p>
+          <div class="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <a
+              href="/generate"
+              class="inline-flex items-center justify-center rounded-lg bg-purple-600 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-purple-500"
+            >
+              Generate Flashcards
+            </a>
+            <a
+              href="/deck"
+              class="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-white/10"
+            >
+              My Deck
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

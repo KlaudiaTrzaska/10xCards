@@ -67,7 +67,7 @@ export default function CurationPanel({ cards, generationId, onReset }: Curation
         setSaveError(data.error ?? "Failed to save — please try again.");
       } else {
         onReset();
-        window.location.href = `/dashboard?saved=${data.savedCount}`;
+        window.location.href = `/deck?saved=${data.savedCount}`;
       }
     } catch {
       setSaveError("Network error — please check your connection and try again.");

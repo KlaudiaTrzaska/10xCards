@@ -1,8 +1,10 @@
 ---
 import Welcome from "@/components/Welcome.astro";
 import Layout from "@/layouts/Layout.astro";
+
+const { user } = Astro.locals;
 ---
 
 <Layout>
-  <Welcome />
+  <Welcome user={user} />
 </Layout>
