@@ -118,6 +118,7 @@ export type StudyCardDTO = Pick<
 export interface StudyDueResponseDTO {
   cards: StudyCardDTO[];
   total_due: number;
+  total_accepted: number;
 }
 
 // Input to POST /api/study/review

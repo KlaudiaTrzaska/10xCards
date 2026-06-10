@@ -421,22 +421,22 @@ All FSRS columns added in Phase 1 are nullable with no `DEFAULT` values. Existin
 
 #### Automated
 
-- [x] 1.1 npm install ts-fsrs completes; package in dependencies
-- [x] 1.2 npm run build passes with new types and migrations
-- [x] 1.3 npm run lint passes
+- [x] 1.1 npm install ts-fsrs completes; package in dependencies — be5c4f3
+- [x] 1.2 npm run build passes with new types and migrations — be5c4f3
+- [x] 1.3 npm run lint passes — be5c4f3
 
 #### Manual
 
-- [x] 1.4 Both migration files present with correct timestamp-prefixed names
-- [x] 1.5 FSRS columns visible on flashcards in Supabase dashboard after migration up
-- [x] 1.6 review_logs table exists with RLS enabled and SELECT/INSERT-only policies
+- [x] 1.4 Both migration files present with correct timestamp-prefixed names — be5c4f3
+- [x] 1.5 FSRS columns visible on flashcards in Supabase dashboard after migration up — be5c4f3
+- [x] 1.6 review_logs table exists with RLS enabled and SELECT/INSERT-only policies — be5c4f3
 
 ### Phase 2: SRS Service and API Endpoints
 
 #### Automated
 
-- [ ] 2.1 npm run lint passes
-- [ ] 2.2 npm run build passes
+- [x] 2.1 npm run lint passes
+- [x] 2.2 npm run build passes
 
 #### Manual
 
