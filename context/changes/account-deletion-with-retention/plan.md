@@ -454,43 +454,43 @@ If the pg_cron `net` extension is not enabled on the hosted project, use the Sup
 
 #### Automated
 
-- [x] 1.1 Migration applies cleanly to remote: `npx supabase db push`
-- [x] 1.2 TypeScript compiles without errors: `npm run build`
-- [x] 1.3 Lint passes: `npm run lint`
+- [x] 1.1 Migration applies cleanly to remote: `npx supabase db push` — eb37c9d
+- [x] 1.2 TypeScript compiles without errors: `npm run build` — eb37c9d
+- [x] 1.3 Lint passes: `npm run lint` — eb37c9d
 
 #### Manual
 
-- [x] 1.4 `profiles` table exists with correct columns in Supabase Dashboard
-- [x] 1.5 All existing auth users have a `profiles` row (row count matches `auth.users`)
-- [x] 1.6 RLS predicate verified: product data hidden for user with `profiles.deleted_at` set
+- [x] 1.4 `profiles` table exists with correct columns in Supabase Dashboard — eb37c9d
+- [x] 1.5 All existing auth users have a `profiles` row (row count matches `auth.users`) — eb37c9d
+- [x] 1.6 RLS predicate verified: product data hidden for user with `profiles.deleted_at` set — eb37c9d
 
 ### Phase 2: Service-Role Client & Delete-Account API
 
 #### Automated
 
-- [ ] 2.1 `npm run build` succeeds
-- [ ] 2.2 `npm run lint` passes
+- [x] 2.1 `npm run build` succeeds
+- [x] 2.2 `npm run lint` passes
 
 #### Manual
 
-- [ ] 2.3 `POST /api/account/delete` with wrong email returns `403`
-- [ ] 2.4 `POST /api/account/delete` with correct email sets `profiles.deleted_at`, bans user, redirects to `/`
-- [ ] 2.5 Attempting sign-in with deleted email returns auth error
+- [x] 2.3 `POST /api/account/delete` with wrong email returns `403`
+- [x] 2.4 `POST /api/account/delete` with correct email sets `profiles.deleted_at`, bans user, redirects to `/`
+- [x] 2.5 Attempting sign-in with deleted email returns auth error
 
 ### Phase 3: Settings UI
 
 #### Automated
 
-- [ ] 3.1 `npm run build` passes
-- [ ] 3.2 `npm run lint` passes
+- [x] 3.1 `npm run build` passes
+- [x] 3.2 `npm run lint` passes
 
 #### Manual
 
-- [ ] 3.3 `/settings` accessible when logged in; redirects when logged out
-- [ ] 3.4 Topbar shows Settings link
-- [ ] 3.5 Delete button disabled until correct email typed
-- [ ] 3.6 Full E2E: submit correct email → signed out → redirected to `/`
-- [ ] 3.7 Wrong email shows inline error
+- [x] 3.3 `/settings` accessible when logged in; redirects when logged out
+- [x] 3.4 Topbar shows Settings link
+- [x] 3.5 Delete button disabled until correct email typed
+- [x] 3.6 Full E2E: submit correct email → signed out → redirected to `/`
+- [x] 3.7 Wrong email shows inline error
 
 ### Phase 4: Purge Edge Function
 
