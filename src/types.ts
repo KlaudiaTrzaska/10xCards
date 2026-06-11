@@ -224,6 +224,12 @@ export interface Database {
         };
         Relationships: [];
       };
+      profiles: {
+        Row: { id: string; deleted_at: string | null; created_at: string };
+        Insert: { id: string; deleted_at?: string | null };
+        Update: { deleted_at?: string | null };
+        Relationships: [];
+      };
       review_logs: {
         Row: {
           id: string;
