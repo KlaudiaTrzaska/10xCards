@@ -228,7 +228,7 @@ For each step, note what the skill being analyzed does at that level, so the lea
 ## Edge Cases
 
 - **Skill has no references/ directory**: skip the references analysis. Don't mention that references are missing — most simple skills don't have them, and that's fine.
-- **Skill is a prompt file, not a SKILL.md**: if the user points to the AI tool's configuration directory/prompts/*.md file, explain that prompts are simpler than skills (no frontmatter, no allowed-tools, no chain position) and analyze what's there. Adjust the report to skip sections that don't apply.
+- **Skill is a prompt file, not a SKILL.md**: if the user points to a `.claude/prompts/*.md` file, explain that prompts are simpler than skills (no frontmatter, no allowed-tools, no chain position) and analyze what's there. Adjust the report to skip sections that don't apply.
 - **Skill is very short (under 50 lines)**: produce a minimal report — Problem & Purpose + Anatomy + Building Something Similar. Skip chain position, key mechanics, and adaptation guide if there's nothing meaningful to say.
 - **Skill uses patterns not listed above**: analyze what you see. The mechanics list in section 5 is illustrative, not exhaustive. If the skill has a unique pattern, explain it.
 

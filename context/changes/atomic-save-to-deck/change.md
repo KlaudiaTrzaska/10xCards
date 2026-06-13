@@ -1,9 +1,9 @@
 ---
 id: atomic-save-to-deck
 title: "Atomic Save to Deck (S-02)"
-status: implemented
+status: impl_reviewed
 created: 2026-06-08
-updated: 2026-06-08
+updated: 2026-06-10
 roadmap_id: S-02
 prd_refs:
   - FR-005
