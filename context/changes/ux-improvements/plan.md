@@ -302,13 +302,13 @@ No DB migration. No env changes.
 
 #### Automated
 
-- [x] 2.1 Lint passes: `npm run lint`
-- [x] 2.2 Build passes: `npm run build`
+- [x] 2.1 Lint passes: `npm run lint` — 3960b7a
+- [x] 2.2 Build passes: `npm run build` — 3960b7a
 
 #### Manual
 
-- [x] 2.3 End session navigates to `/deck`; prior reviews persisted
-- [x] 2.4 DeckManager shows spinner while loading
-- [x] 2.5 CardModal shows spinner while saving
-- [x] 2.6 StudySession shows spinner while submitting grade
-- [x] 2.7 Study empty/error/complete phases unaffected
+- [x] 2.3 End session navigates to `/deck`; prior reviews persisted — 3960b7a
+- [x] 2.4 DeckManager shows spinner while loading — 3960b7a
+- [x] 2.5 CardModal shows spinner while saving — 3960b7a
+- [x] 2.6 StudySession shows spinner while submitting grade — 3960b7a
+- [x] 2.7 Study empty/error/complete phases unaffected — 3960b7a
