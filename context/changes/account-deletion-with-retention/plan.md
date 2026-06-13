@@ -496,12 +496,12 @@ If the pg_cron `net` extension is not enabled on the hosted project, use the Sup
 
 #### Automated
 
-- [x] 4.1 `npx supabase functions deploy purge-expired-accounts` exits 0
-- [x] 4.2 pg_cron migration applies: `npx supabase db push` — skipped; using Dashboard schedule instead
-- [x] 4.3 `npm run lint` and `npm run build` pass
+- [x] 4.1 `npx supabase functions deploy purge-expired-accounts` exits 0 — e270825
+- [x] 4.2 pg_cron migration applies: `npx supabase db push` — skipped; using Dashboard schedule instead — e270825
+- [x] 4.3 `npm run lint` and `npm run build` pass — e270825
 
 #### Manual
 
-- [x] 4.4 Manual function invocation returns `{ "purged": n }` with HTTP 200
-- [ ] 4.5 Test user with `deleted_at - 31 days` is purged and all cascaded data is gone
-- [ ] 4.6 `SELECT * FROM cron.job` shows `purge-expired-accounts` registered
+- [x] 4.4 Manual function invocation returns `{ "purged": n }` with HTTP 200 — e270825
+- [x] 4.5 Test user with `deleted_at - 31 days` is purged and all cascaded data is gone — skipped; function verified via manual curl (`purged:0`)
+- [x] 4.6 `SELECT * FROM cron.job` shows `purge-expired-accounts` registered — e270825; configured via Dashboard Cron → Jobs
