@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { formatRelativeReviewTime } from "@/lib/format-interval";
+import { OUTCOME_INTERVAL_LABELS } from "@/lib/study-intervals";
 import { cn } from "@/lib/utils";
 import type { ReviewOutcome, StudyCardDTO, StudyDueResponseDTO, SubmitReviewResponseDTO } from "@/types";
 
@@ -8,7 +10,7 @@ type SessionState =
   | { phase: "loading" }
   | { phase: "error"; message: string }
   | { phase: "empty-no-cards" }
-  | { phase: "empty-no-due" }
+  | { phase: "empty-no-due"; nextDueAt: string | null }
   | {
       phase: "studying";
       cards: StudyCardDTO[];
@@ -17,9 +19,9 @@ type SessionState =
       isFlipped: boolean;
       isSubmitting: boolean;
       lastError: string | null;
-      grades: ReviewOutcome[];
+      totalReviewed: number;
     }
-  | { phase: "complete"; totalReviewed: number; grades: ReviewOutcome[] };
+  | { phase: "complete"; totalReviewed: number; nextDueAt: string | null };
 
 // ── Grade button config ──────────────────────────────────────────────────────
 
@@ -38,6 +40,14 @@ const GRADES: { outcome: ReviewOutcome; label: string; className: string }[] = [
   { outcome: "easy", label: "Easy", className: "border-blue-500/40 bg-blue-900/30 text-blue-300 hover:bg-blue-900/50" },
 ];
 
+function nextReviewMessage(nextDueAt: string | null): string {
+  if (!nextDueAt) {
+    return "Check back later for your next session.";
+  }
+
+  return `Next flashcard ${formatRelativeReviewTime(nextDueAt)}.`;
+}
+
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function StudySession() {
@@ -45,10 +55,14 @@ export default function StudySession() {
 
   // Load due cards on mount
   useEffect(() => {
+    let cancelled = false;
+
     async function loadDueCards() {
       try {
         const res = await fetch("/api/study/due");
         const data = (await res.json()) as StudyDueResponseDTO & { error?: string };
+
+        if (cancelled) return;
 
         if (!res.ok) {
           setSession({ phase: "error", message: data.error ?? "Failed to load cards." });
@@ -59,7 +73,7 @@ export default function StudySession() {
           if (data.total_accepted === 0) {
             setSession({ phase: "empty-no-cards" });
           } else {
-            setSession({ phase: "empty-no-due" });
+            setSession({ phase: "empty-no-due", nextDueAt: data.next_due_at });
           }
           return;
         }
@@ -72,14 +86,20 @@ export default function StudySession() {
           isFlipped: false,
           isSubmitting: false,
           lastError: null,
-          grades: [],
+          totalReviewed: 0,
         });
       } catch {
-        setSession({ phase: "error", message: "Network error. Please refresh and try again." });
+        if (!cancelled) {
+          setSession({ phase: "error", message: "Network error. Please refresh and try again." });
+        }
       }
     }
 
     void loadDueCards();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function handleGrade(outcome: ReviewOutcome) {
@@ -102,21 +122,43 @@ export default function StudySession() {
         return;
       }
 
-      const newGrades = [...session.grades, outcome];
+      const totalReviewed = session.totalReviewed + 1;
       const nextIndex = session.currentIndex + 1;
 
       if (nextIndex >= session.cards.length) {
-        setSession({ phase: "complete", totalReviewed: session.cards.length, grades: newGrades });
-      } else {
+        const dueRes = await fetch("/api/study/due");
+        const dueData = (await dueRes.json()) as StudyDueResponseDTO & { error?: string };
+
+        if (dueRes.ok && dueData.cards.length > 0) {
+          setSession({
+            phase: "studying",
+            cards: dueData.cards,
+            totalDue: dueData.total_due,
+            currentIndex: 0,
+            isFlipped: false,
+            isSubmitting: false,
+            lastError: null,
+            totalReviewed,
+          });
+          return;
+        }
+
         setSession({
-          ...session,
-          currentIndex: nextIndex,
-          isFlipped: false,
-          isSubmitting: false,
-          lastError: null,
-          grades: newGrades,
+          phase: "complete",
+          totalReviewed,
+          nextDueAt: dueRes.ok ? dueData.next_due_at : null,
         });
+        return;
       }
+
+      setSession({
+        ...session,
+        currentIndex: nextIndex,
+        isFlipped: false,
+        isSubmitting: false,
+        lastError: null,
+        totalReviewed,
+      });
     } catch {
       setSession({ ...session, isSubmitting: false, lastError: "Network error — please try again." });
     }
@@ -156,50 +198,22 @@ export default function StudySession() {
     );
   }
 
-  if (session.phase === "empty-no-due") {
+  if (session.phase === "empty-no-due" || session.phase === "complete") {
+    const reviewedNote =
+      session.phase === "complete" && session.totalReviewed > 0
+        ? `${session.totalReviewed} ${session.totalReviewed === 1 ? "card" : "cards"} reviewed this session.`
+        : null;
+
     return (
       <div className="py-16 text-center">
-        <p className="mb-2 text-2xl">🎉</p>
-        <p className="mb-2 text-lg font-medium text-white">All caught up!</p>
-        <p className="mb-6 text-sm text-blue-100/60">
-          No cards are due right now. Come back later for your next session.
-        </p>
+        <p className="mb-2 text-lg font-medium text-white">Nothing to review.</p>
+        <p className="mb-2 text-sm text-blue-100/60">{nextReviewMessage(session.nextDueAt)}</p>
+        {reviewedNote && <p className="mb-6 text-xs text-blue-100/40">{reviewedNote}</p>}
         <a
           href="/deck"
           className="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10"
         >
           View My Deck
-        </a>
-      </div>
-    );
-  }
-
-  if (session.phase === "complete") {
-    const counts = { again: 0, hard: 0, good: 0, easy: 0 } as Record<ReviewOutcome, number>;
-    for (const g of session.grades) counts[g]++;
-
-    return (
-      <div className="py-8 text-center">
-        <p className="mb-1 text-2xl">✅</p>
-        <h2 className="mb-1 text-xl font-bold text-white">Session complete!</h2>
-        <p className="mb-6 text-sm text-blue-100/60">
-          {session.totalReviewed} {session.totalReviewed === 1 ? "card" : "cards"} reviewed
-        </p>
-
-        <div className="mb-8 grid grid-cols-4 gap-3">
-          {GRADES.map(({ outcome, label, className }) => (
-            <div key={outcome} className={cn("rounded-lg border px-3 py-3 text-center text-sm", className)}>
-              <div className="text-xl font-bold">{counts[outcome]}</div>
-              <div className="mt-0.5 text-xs opacity-80">{label}</div>
-            </div>
-          ))}
-        </div>
-
-        <a
-          href="/deck"
-          className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-purple-500"
-        >
-          Back to Deck
         </a>
       </div>
     );
@@ -260,19 +274,21 @@ export default function StudySession() {
         >
           Show Answer
         </button>
+      ) : isSubmitting ? (
+        <div className="py-3 text-center text-sm text-blue-100/50">Saving review…</div>
       ) : (
         <div className="grid grid-cols-4 gap-2">
           {GRADES.map(({ outcome, label, className }) => (
             <button
               key={outcome}
               onClick={() => void handleGrade(outcome)}
-              disabled={isSubmitting}
               className={cn(
-                "rounded-lg border px-3 py-3 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50",
+                "flex flex-col items-center rounded-lg border px-2 py-3 text-sm font-medium transition-colors",
                 className,
               )}
             >
-              {label}
+              <span>{label}</span>
+              <span className="mt-0.5 text-xs opacity-70">{OUTCOME_INTERVAL_LABELS[outcome]}</span>
             </button>
           ))}
         </div>
