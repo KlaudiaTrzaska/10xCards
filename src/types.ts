@@ -96,6 +96,12 @@ export interface ReviewLog {
   reviewed_at: string;
 }
 
+// FSRS interval preview for one grade button
+export interface ReviewIntervalPreview {
+  scheduledFor: string;
+  scheduledDays: number;
+}
+
 // Card fields returned to the study session (subset of Flashcard)
 export type StudyCardDTO = Pick<
   Flashcard,
@@ -112,13 +118,17 @@ export type StudyCardDTO = Pick<
   | "fsrs_lapses"
   | "fsrs_state"
   | "fsrs_last_review"
->;
+> & {
+  interval_previews: Record<ReviewOutcome, ReviewIntervalPreview>;
+};
 
 // Response from GET /api/study/due
 export interface StudyDueResponseDTO {
   cards: StudyCardDTO[];
   total_due: number;
   total_accepted: number;
+  /** Earliest future fsrs_due among accepted cards; null when none scheduled yet. */
+  next_due_at: string | null;
 }
 
 // Input to POST /api/study/review
