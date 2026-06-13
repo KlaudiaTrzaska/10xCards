@@ -1,10 +1,10 @@
 ---
 change_id: account-deletion-with-retention
 title: Account deletion with 30-day data retention
-status: impl_reviewed
+status: archived
 created: 2026-06-10
 updated: 2026-06-13
-archived_at: null
+archived_at: 2026-06-13T14:19:14Z
 ---
 
 ## Notes

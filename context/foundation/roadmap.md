@@ -3,7 +3,7 @@ project: "10xCards"
 version: 1
 status: draft
 created: 2026-06-05
-updated: 2026-06-05
+updated: 2026-06-13
 prd_version: 1
 main_goal: speed
 top_blocker: time
@@ -35,7 +35,7 @@ Profesjonaliści uczący się materiału do pracy lub certyfikacji tracą czas n
 | S-02 | `atomic-save-to-deck` | ocenić każdego kandydata (accept/edit/discard) i zapisać zaakceptowane karty atomowo do talii | S-01 | FR-005, US-01 | proposed |
 | S-03 | `deck-edit-delete` | przeglądać talię, ręcznie stworzyć fiszkę, edytować i usuwać karty | S-02 | FR-006, FR-007 | proposed |
 | S-04 | `srs-review-session` | rozpocząć sesję nauki, zobaczyć zaplanowane karty i zapisać ocenę każdej powtórki | S-02 | FR-008, FR-009, US-01 | blocked |
-| S-05 | `account-deletion-with-retention` | usunąć konto z 30-dniowym okresem retencji danych przed trwałym usunięciem | F-01 | FR-001, FR-002 | proposed |
+| S-05 | `account-deletion-with-retention` | usunąć konto z 30-dniowym okresem retencji danych przed trwałym usunięciem | F-01 | FR-001, FR-002 | done |
 
 ## Baseline
 
@@ -145,7 +145,7 @@ Foundations below assume these are present and do NOT re-scaffold them.
 - **Unknowns:**
   - Mechanizm soft-delete (pole `deleted_at` + scheduled job) vs Supabase scheduled function — Owner: user. Block: no (do ustalenia w `/10x-plan`).
 - **Risk:** Cloudflare Workers nie ma natywnego job schedulera (brak cron bez dodatkowej konfiguracji `wrangler.jsonc`); trwałe usunięcie po 30 dniach wymaga osobnego mechanizmu (Supabase Edge Functions cron lub Workers Cron Trigger)
-- **Status:** proposed
+- **Status:** done
 
 ## Backlog Handoff
 
@@ -179,4 +179,4 @@ Foundations below assume these are present and do NOT re-scaffold them.
 
 ## Done
 
-(Empty on first generation. `/10x-archive` appends an entry here — and flips that item's `Status` to `done` — when a change whose `Change ID` matches the item is archived.)
+- **S-05: user może usunąć konto z 30-dniowym okresem retencji danych przed trwałym usunięciem; dane są nieodwracalnie usuwane po upływie okresu** — Archived 2026-06-13 → `context/archive/2026-06-10-account-deletion-with-retention/`. Lesson: —.
