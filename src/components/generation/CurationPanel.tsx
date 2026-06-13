@@ -176,6 +176,10 @@ export default function CurationPanel({ cards, generationId, onReset }: Curation
         </button>
       </div>
 
+      {savedCount === 0 && discardedCount > 0 && (
+        <p className="text-xs text-blue-100/50">Accept or edit at least one card to save.</p>
+      )}
+
       <ul className="space-y-3 pb-24">
         {cards.map((card, i) => {
           const decision = decisions.get(card.id);

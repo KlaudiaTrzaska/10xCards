@@ -126,28 +126,37 @@ export default function StudySession() {
       const nextIndex = session.currentIndex + 1;
 
       if (nextIndex >= session.cards.length) {
-        const dueRes = await fetch("/api/study/due");
-        const dueData = (await dueRes.json()) as StudyDueResponseDTO & { error?: string };
+        try {
+          const dueRes = await fetch("/api/study/due");
+          const dueData = (await dueRes.json()) as StudyDueResponseDTO & { error?: string };
 
-        if (dueRes.ok && dueData.cards.length > 0) {
+          if (dueRes.ok && dueData.cards.length > 0) {
+            setSession({
+              phase: "studying",
+              cards: dueData.cards,
+              totalDue: dueData.total_due,
+              currentIndex: 0,
+              isFlipped: false,
+              isSubmitting: false,
+              lastError: null,
+              totalReviewed,
+            });
+            return;
+          }
+
           setSession({
-            phase: "studying",
-            cards: dueData.cards,
-            totalDue: dueData.total_due,
-            currentIndex: 0,
-            isFlipped: false,
-            isSubmitting: false,
-            lastError: null,
+            phase: "complete",
             totalReviewed,
+            nextDueAt: dueRes.ok ? dueData.next_due_at : null,
           });
-          return;
+        } catch {
+          // Review already persisted — complete session even if due refresh fails
+          setSession({
+            phase: "complete",
+            totalReviewed,
+            nextDueAt: null,
+          });
         }
-
-        setSession({
-          phase: "complete",
-          totalReviewed,
-          nextDueAt: dueRes.ok ? dueData.next_due_at : null,
-        });
         return;
       }
 

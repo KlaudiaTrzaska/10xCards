@@ -78,3 +78,11 @@ three components.
 - User triages a 10–15 card batch with bulk actions and commits via existing Save
 - User exits study mid-session; prior reviews persist
 - Deck, modal, and study async operations show consistent spinner feedback
+
+## Implementation addendum (post-plan)
+
+Added during implementation per user feedback (not in original plan text):
+
+- **Clear accepted & discarded** — single toolbar button reverting plain accept/discard decisions to undecided (`CurationPanel.tsx`)
+- **Calendar-aware due labels** — `formatRelativeReviewTime` uses local calendar days so “Again → tomorrow” matches “Next flashcard tomorrow” (`format-interval.ts`)
+- **Discard-only save hint** — one-line hint when cards are discarded but none accepted/edited
