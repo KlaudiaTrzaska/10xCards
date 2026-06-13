@@ -468,40 +468,40 @@ If the pg_cron `net` extension is not enabled on the hosted project, use the Sup
 
 #### Automated
 
-- [x] 2.1 `npm run build` succeeds
-- [x] 2.2 `npm run lint` passes
+- [x] 2.1 `npm run build` succeeds — c617d38
+- [x] 2.2 `npm run lint` passes — c617d38
 
 #### Manual
 
-- [x] 2.3 `POST /api/account/delete` with wrong email returns `403`
-- [x] 2.4 `POST /api/account/delete` with correct email sets `profiles.deleted_at`, bans user, redirects to `/`
-- [x] 2.5 Attempting sign-in with deleted email returns auth error
+- [x] 2.3 `POST /api/account/delete` with wrong email returns `403` — c617d38
+- [x] 2.4 `POST /api/account/delete` with correct email sets `profiles.deleted_at`, bans user, redirects to `/` — c617d38
+- [x] 2.5 Attempting sign-in with deleted email returns auth error — c617d38
 
 ### Phase 3: Settings UI
 
 #### Automated
 
-- [x] 3.1 `npm run build` passes
-- [x] 3.2 `npm run lint` passes
+- [x] 3.1 `npm run build` passes — 1838127
+- [x] 3.2 `npm run lint` passes — 1838127
 
 #### Manual
 
-- [x] 3.3 `/settings` accessible when logged in; redirects when logged out
-- [x] 3.4 Topbar shows Settings link
-- [x] 3.5 Delete button disabled until correct email typed
-- [x] 3.6 Full E2E: submit correct email → signed out → redirected to `/`
-- [x] 3.7 Wrong email shows inline error
+- [x] 3.3 `/settings` accessible when logged in; redirects when logged out — 1838127
+- [x] 3.4 Topbar shows Settings link — 1838127
+- [x] 3.5 Delete button disabled until correct email typed — 1838127
+- [x] 3.6 Full E2E: submit correct email → signed out → redirected to `/` — 1838127
+- [x] 3.7 Wrong email shows inline error — 1838127
 
 ### Phase 4: Purge Edge Function
 
 #### Automated
 
-- [ ] 4.1 `npx supabase functions deploy purge-expired-accounts` exits 0
-- [ ] 4.2 pg_cron migration applies: `npx supabase db push`
-- [ ] 4.3 `npm run lint` and `npm run build` pass
+- [x] 4.1 `npx supabase functions deploy purge-expired-accounts` exits 0
+- [x] 4.2 pg_cron migration applies: `npx supabase db push` — skipped; using Dashboard schedule instead
+- [x] 4.3 `npm run lint` and `npm run build` pass
 
 #### Manual
 
-- [ ] 4.4 Manual function invocation returns `{ "purged": n }` with HTTP 200
+- [x] 4.4 Manual function invocation returns `{ "purged": n }` with HTTP 200
 - [ ] 4.5 Test user with `deleted_at - 31 days` is purged and all cascaded data is gone
 - [ ] 4.6 `SELECT * FROM cron.job` shows `purge-expired-accounts` registered
