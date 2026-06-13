@@ -29,3 +29,17 @@
 - **Problem**: This project has no local Supabase/Postgres instance. Steps that require a local DB connection fail silently or with a connection error, leaving migration verification unconfirmed even when lint/build pass.
 - **Rule**: Never list `npx supabase migration up` (local) as a verification step. Migration verification for this project must use the Supabase CLI against the remote/hosted instance (e.g. `supabase db push` or dashboard inspection). Plans must not assume local Postgres is running.
 - **Applies to**: plan, plan-review, implement, impl-review
+
+## Guard async handlers against double submission
+
+- **Context**: `src/components/study/StudySession.tsx:105-109`
+- **Problem**: `handleGrade` sets `isSubmitting` via React state but has no synchronous guard. A fast double-click before re-render can fire two review POSTs for the same card, duplicating `review_logs`.
+- **Rule**: TODO: Add an early `isSubmitting` return or a synchronous `useRef` lock at the start of any handler that POSTs irreversible mutations.
+- **Applies to**: TODO: Interactive React handlers that POST reviews, saves, or deletes.
+
+## Trim and validate inline edit fields before staging curation saves
+
+- **Context**: `src/components/generation/CurationPanel.tsx:243-248`
+- **Problem**: Curation edit Confirm saves textarea values without trim or empty checks. Whitespace-only front/back can reach `save-deck`, which only enforces `min(1)` on raw strings.
+- **Rule**: TODO: Mirror modal validation — trim on confirm and block empty fields before staging an edited card decision.
+- **Applies to**: TODO: Inline edit flows that feed validated API payloads (curation, deck CRUD).

@@ -36,6 +36,7 @@ Profesjonaliści uczący się materiału do pracy lub certyfikacji tracą czas n
 | S-03 | `deck-edit-delete` | przeglądać talię, ręcznie stworzyć fiszkę, edytować i usuwać karty | S-02 | FR-006, FR-007 | done |
 | S-04 | `srs-review-session` | rozpocząć sesję nauki, zobaczyć zaplanowane karty i zapisać ocenę każdej powtórki | S-02 | FR-008, FR-009, US-01 | done |
 | S-05 | `account-deletion-with-retention` | usunąć konto z 30-dniowym okresem retencji danych przed trwałym usunięciem | F-01 | FR-001, FR-002 | done |
+| S-06 | `ux-improvements` | masowo ocenić kandydatów, zresetować sesję nauki i widzieć czytelne stany ładowania | F-01 | FR-005, FR-008, US-01 | planned |
 
 ## Baseline
 
@@ -140,14 +141,27 @@ What's already in place in the codebase as of `2026-06-13` (auto-researched from
 - **Risk:** Cloudflare Workers nie ma natywnego job schedulera (brak cron bez dodatkowej konfiguracji `wrangler.jsonc`); trwałe usunięcie po 30 dniach wymaga osobnego mechanizmu (Supabase Edge Functions cron lub Workers Cron Trigger)
 - **Status:** done — archived 2026-06-13. Soft-delete via `profiles.deleted_at` + Supabase Edge Function `purge-expired-accounts` (cron 03:00 UTC) + `/settings` UI.
 
+### S-06: UX improvements
+
+- **Outcome:** user może masowo ocenić kandydatów przy kuracji, zresetować trwającą sesję nauki i widzieć czytelne stany ładowania podczas operacji asynchronicznych
+- **Change ID:** `ux-improvements`
+- **PRD refs:** FR-005, FR-008, US-01
+- **Prerequisites:** F-01
+- **Parallel with:** S-05
+- **Blockers:** —
+- **Unknowns:** —
+- **Risk:** Akcje masowe muszą zachować semantykę atomowego zapisu (S-02); reset sesji nie może naruszyć historii powtórek (NFR)
+- **Status:** planned
+
 ## Backlog Handoff
 
 | Roadmap ID | Change ID | Suggested issue title | Ready for `/10x-plan` | Notes |
 |---|---|---|---|---|
+| S-06 | `ux-improvements` | Bulk curation actions, study session reset, loading states | yes | Dotyka kuracji (S-02) i sesji nauki (S-04) |
 | — | `deployment` (follow-ups) | Custom domain, preview security, rollback docs | yes | Fazy 5–10 w `context/changes/deployment/deployment-plan.md` |
 | — | — | Validate PRD success metrics with real users | no | Wymaga użytkowników produkcyjnych; nie ma dedykowanego change folder |
 
-> Wszystkie slice'y roadmapy (F-01, F-02, S-01–S-05) są zaimplementowane. Kolejne prace to hardening produkcji i walidacja hipotezy produktowej — nie nowe slice'y MVP.
+> Slice'y MVP (F-01, F-02, S-01–S-05) są zaimplementowane. S-06 to planowane domknięcie UX; poza tym hardening produkcji i walidacja hipotezy produktowej.
 
 ## Open Roadmap Questions
 

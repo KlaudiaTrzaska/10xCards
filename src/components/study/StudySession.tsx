@@ -126,28 +126,37 @@ export default function StudySession() {
       const nextIndex = session.currentIndex + 1;
 
       if (nextIndex >= session.cards.length) {
-        const dueRes = await fetch("/api/study/due");
-        const dueData = (await dueRes.json()) as StudyDueResponseDTO & { error?: string };
+        try {
+          const dueRes = await fetch("/api/study/due");
+          const dueData = (await dueRes.json()) as StudyDueResponseDTO & { error?: string };
 
-        if (dueRes.ok && dueData.cards.length > 0) {
+          if (dueRes.ok && dueData.cards.length > 0) {
+            setSession({
+              phase: "studying",
+              cards: dueData.cards,
+              totalDue: dueData.total_due,
+              currentIndex: 0,
+              isFlipped: false,
+              isSubmitting: false,
+              lastError: null,
+              totalReviewed,
+            });
+            return;
+          }
+
           setSession({
-            phase: "studying",
-            cards: dueData.cards,
-            totalDue: dueData.total_due,
-            currentIndex: 0,
-            isFlipped: false,
-            isSubmitting: false,
-            lastError: null,
+            phase: "complete",
             totalReviewed,
+            nextDueAt: dueRes.ok ? dueData.next_due_at : null,
           });
-          return;
+        } catch {
+          // Review already persisted — complete session even if due refresh fails
+          setSession({
+            phase: "complete",
+            totalReviewed,
+            nextDueAt: null,
+          });
         }
-
-        setSession({
-          phase: "complete",
-          totalReviewed,
-          nextDueAt: dueRes.ok ? dueData.next_due_at : null,
-        });
         return;
       }
 
@@ -232,7 +241,19 @@ export default function StudySession() {
           Card {currentIndex + 1} of {cards.length}
           {remaining > 0 && <span className="ml-1 text-purple-300/60">(+{remaining} more due)</span>}
         </span>
-        <span className="text-blue-100/30">{Math.round((currentIndex / cards.length) * 100)}% done</span>
+        <div className="flex items-center gap-3">
+          <span className="text-blue-100/30">{Math.round((currentIndex / cards.length) * 100)}% done</span>
+          <a
+            href="/deck"
+            aria-disabled={isSubmitting}
+            className={cn(
+              "text-blue-100/40 transition-colors hover:text-white",
+              isSubmitting && "pointer-events-none opacity-50",
+            )}
+          >
+            End session
+          </a>
+        </div>
       </div>
 
       {/* Progress bar */}
@@ -275,7 +296,10 @@ export default function StudySession() {
           Show Answer
         </button>
       ) : isSubmitting ? (
-        <div className="py-3 text-center text-sm text-blue-100/50">Saving review…</div>
+        <div className="flex items-center justify-center gap-2 py-3 text-sm text-blue-100/50">
+          <span className="size-4 animate-spin rounded-full border-2 border-purple-400/50 border-t-purple-400" />
+          Saving review…
+        </div>
       ) : (
         <div className="grid grid-cols-4 gap-2">
           {GRADES.map(({ outcome, label, className }) => (
