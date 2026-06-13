@@ -287,28 +287,28 @@ No DB migration. No env changes.
 
 #### Automated
 
-- [x] 1.1 Lint passes: `npm run lint`
-- [x] 1.2 Build passes: `npm run build`
+- [x] 1.1 Lint passes: `npm run lint` — 84e9c9c
+- [x] 1.2 Build passes: `npm run build` — 84e9c9c
 
 #### Manual
 
-- [x] 1.3 Accept all remaining accepts only undecided cards; Save count correct
-- [x] 1.4 Discard all remaining discards only undecided cards; prior decisions preserved
-- [x] 1.5 Cards in edit mode unaffected by bulk actions
-- [x] 1.6 Progress indicator and sticky footer work on 15-card batch
-- [x] 1.7 Save, error retry, and navigation to `/deck?saved=N` unchanged
+- [x] 1.3 Accept all remaining accepts only undecided cards; Save count correct — 84e9c9c
+- [x] 1.4 Discard all remaining discards only undecided cards; prior decisions preserved — 84e9c9c
+- [x] 1.5 Cards in edit mode unaffected by bulk actions — 84e9c9c
+- [x] 1.6 Progress indicator and sticky footer work on 15-card batch — 84e9c9c
+- [x] 1.7 Save, error retry, and navigation to `/deck?saved=N` unchanged — 84e9c9c
 
 ### Phase 2: Study Exit + Loading State Polish
 
 #### Automated
 
-- [ ] 2.1 Lint passes: `npm run lint`
-- [ ] 2.2 Build passes: `npm run build`
+- [x] 2.1 Lint passes: `npm run lint`
+- [x] 2.2 Build passes: `npm run build`
 
 #### Manual
 
-- [ ] 2.3 End session navigates to `/deck`; prior reviews persisted
-- [ ] 2.4 DeckManager shows spinner while loading
-- [ ] 2.5 CardModal shows spinner while saving
-- [ ] 2.6 StudySession shows spinner while submitting grade
-- [ ] 2.7 Study empty/error/complete phases unaffected
+- [x] 2.3 End session navigates to `/deck`; prior reviews persisted
+- [x] 2.4 DeckManager shows spinner while loading
+- [x] 2.5 CardModal shows spinner while saving
+- [x] 2.6 StudySession shows spinner while submitting grade
+- [x] 2.7 Study empty/error/complete phases unaffected

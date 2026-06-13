@@ -123,7 +123,12 @@ export default function DeckManager() {
         </button>
       </div>
 
-      {isLoading && <p className="text-sm text-blue-100/60">Loading deck…</p>}
+      {isLoading && (
+        <div className="py-8 text-center text-blue-100/50">
+          <div className="mx-auto mb-3 h-6 w-6 animate-spin rounded-full border-2 border-purple-400 border-t-transparent" />
+          Loading deck…
+        </div>
+      )}
 
       {!isLoading && error && <p className="text-sm text-red-300">{error}</p>}
 

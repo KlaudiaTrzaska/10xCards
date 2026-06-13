@@ -117,7 +117,16 @@ export default function CardModal({ mode, card, onSave, onClose }: CardModalProp
               Cancel
             </Button>
             <Button type="submit" disabled={isSaving} className="bg-purple-600 text-white hover:bg-purple-700">
-              {isSaving ? "Saving…" : mode === "create" ? "Add Card" : "Save Changes"}
+              {isSaving ? (
+                <span className="flex items-center gap-2">
+                  <span className="size-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  Saving…
+                </span>
+              ) : mode === "create" ? (
+                "Add Card"
+              ) : (
+                "Save Changes"
+              )}
             </Button>
           </DialogFooter>
         </form>
