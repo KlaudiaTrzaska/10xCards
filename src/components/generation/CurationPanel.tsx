@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Check, Pencil, X, CircleAlert, Save } from "lucide-react";
+import { Check, Pencil, X, CircleAlert, Save, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Flashcard, SaveCurationResponseDTO } from "@/types";
 
@@ -32,6 +32,13 @@ export default function CurationPanel({ cards, generationId, onReset }: Curation
     });
   }
 
+  const undecidedCards = cards.filter((card) => !decisions.has(card.id));
+
+  const decidedCount = cards.filter((card) => {
+    const decision = decisions.get(card.id);
+    return decision !== undefined && decision.action !== "editing";
+  }).length;
+
   const acceptedIds = [...decisions.entries()].filter(([, d]) => d.action === "accepted").map(([id]) => id);
 
   const editedCards = [...decisions.entries()]
@@ -44,6 +51,46 @@ export default function CurationPanel({ cards, generationId, onReset }: Curation
   const discardedIds = [...decisions.entries()].filter(([, d]) => d.action === "discarded").map(([id]) => id);
 
   const savedCount = acceptedIds.length + editedCards.length;
+
+  const acceptedOnlyCount = [...decisions.values()].filter((d) => d.action === "accepted").length;
+  const discardedCount = discardedIds.length;
+
+  const clearableCount = acceptedOnlyCount + discardedCount;
+
+  const bulkDisabled = undecidedCards.length === 0 || isSaving;
+  const clearDisabled = clearableCount === 0 || isSaving;
+
+  function acceptAllUndecided() {
+    setDecisions((prev) => {
+      const next = new Map(prev);
+      for (const card of undecidedCards) {
+        next.set(card.id, { action: "accepted" });
+      }
+      return next;
+    });
+  }
+
+  function discardAllUndecided() {
+    setDecisions((prev) => {
+      const next = new Map(prev);
+      for (const card of undecidedCards) {
+        next.set(card.id, { action: "discarded" });
+      }
+      return next;
+    });
+  }
+
+  function clearAcceptedAndDiscarded() {
+    setDecisions((prev) => {
+      const next = new Map(prev);
+      for (const [id, decision] of prev) {
+        if (decision.action === "accepted" || decision.action === "discarded") {
+          next.delete(id);
+        }
+      }
+      return next;
+    });
+  }
 
   async function handleSave() {
     setIsSaving(true);
@@ -78,11 +125,58 @@ export default function CurationPanel({ cards, generationId, onReset }: Curation
 
   return (
     <section className="space-y-4">
-      <h2 className="text-lg font-semibold text-white">
-        Review {cards.length} draft {cards.length === 1 ? "card" : "cards"}
-      </h2>
+      <div className="space-y-1">
+        <h2 className="text-lg font-semibold text-white">
+          {decidedCount} of {cards.length} decided
+        </h2>
+        <p className="text-sm text-blue-100/50">
+          Review {cards.length} draft {cards.length === 1 ? "card" : "cards"}
+        </p>
+      </div>
 
-      <ul className="space-y-3">
+      <div className="flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={acceptAllUndecided}
+          disabled={bulkDisabled}
+          className={cn(
+            "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            "border-white/10 bg-white/5 text-white/60 hover:border-green-500/40 hover:bg-green-900/20 hover:text-green-300",
+          )}
+        >
+          <Check className="size-3" />
+          Accept all remaining
+        </button>
+        <button
+          type="button"
+          onClick={discardAllUndecided}
+          disabled={bulkDisabled}
+          className={cn(
+            "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            "border-white/10 bg-white/5 text-white/60 hover:border-red-500/40 hover:bg-red-900/20 hover:text-red-300",
+          )}
+        >
+          <X className="size-3" />
+          Discard all remaining
+        </button>
+        <button
+          type="button"
+          onClick={clearAcceptedAndDiscarded}
+          disabled={clearDisabled}
+          className={cn(
+            "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors",
+            "disabled:cursor-not-allowed disabled:opacity-50",
+            "border-white/10 bg-white/5 text-white/60 hover:border-white/20 hover:bg-white/10 hover:text-white",
+          )}
+        >
+          <RotateCcw className="size-3" />
+          Clear accepted & discarded
+        </button>
+      </div>
+
+      <ul className="space-y-3 pb-24">
         {cards.map((card, i) => {
           const decision = decisions.get(card.id);
           const isAccepted = decision?.action === "accepted";
@@ -239,7 +333,7 @@ export default function CurationPanel({ cards, generationId, onReset }: Curation
         })}
       </ul>
 
-      <div className="space-y-3 pt-2">
+      <div className="sticky bottom-0 -mx-2 space-y-3 border-t border-white/10 bg-slate-900/90 px-2 pt-3 pb-2 backdrop-blur-xl sm:-mx-4 sm:px-4">
         {saveError && (
           <p className="flex items-start gap-2 rounded-lg border border-red-500/30 bg-red-900/30 px-3 py-2 text-sm text-red-300">
             <CircleAlert className="mt-0.5 size-4 shrink-0" />
