@@ -334,26 +334,26 @@ No database migrations. No schema changes. The `CardSchema` `.trim()` change aff
 
 #### Automated
 
-- [x] 2.1 `npm test` passes with 11 tests, 0 failures
-- [x] 2.2 `npm run lint` passes
-- [x] 2.3 `npm run build` passes
+- [x] 2.1 `npm test` passes with 11 tests, 0 failures — 0c6f5a7
+- [x] 2.2 `npm run lint` passes — 0c6f5a7
+- [x] 2.3 `npm run build` passes — 0c6f5a7
 
 #### Manual
 
-- [x] 2.4 Temporarily revert one fix — confirm the corresponding test fails (proves tests catch the bug)
+- [x] 2.4 Temporarily revert one fix — confirm the corresponding test fails (proves tests catch the bug) — 0c6f5a7
 
 ### Phase 3: API route fix + integration tests
 
 #### Automated
 
-- [ ] 3.1 `npm test` passes with all 17 tests, 0 failures
-- [ ] 3.2 `npm run lint` passes
-- [ ] 3.3 `npm run build` passes
+- [x] 3.1 `npm test` passes with all 17 tests, 0 failures
+- [x] 3.2 `npm run lint` passes
+- [x] 3.3 `npm run build` passes
 
 #### Manual
 
-- [ ] 3.4 Dev server: generate a deck with valid source text — happy path works
-- [ ] 3.5 Verify server logs show provider error details, browser does not
+- [x] 3.4 Dev server: generate a deck with valid source text — happy path works
+- [x] 3.5 Verify server logs show provider error details, browser does not
 
 ### Phase 4: CI wiring + §6 cookbook
 

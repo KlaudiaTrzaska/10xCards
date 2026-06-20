@@ -11,7 +11,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@/": path.resolve(__dirname, "./src/"),
+      "@/": path.resolve(__dirname, "./src") + "/",
       "astro:env/server": path.resolve(__dirname, "./src/__mocks__/astro-env-server.ts"),
     },
   },

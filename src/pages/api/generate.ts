@@ -44,7 +44,7 @@ export const POST: APIRoute = async (context) => {
     if (err instanceof GenerationError) {
       // eslint-disable-next-line no-console
       console.error("[generate] GenerationError:", err.message, err.cause);
-      return json({ error: `Generation failed: ${err.message}` }, 502);
+      return json({ error: "Generation failed — please try again." }, 502);
     }
     // eslint-disable-next-line no-console
     console.error("[generate] Unexpected error:", err);
