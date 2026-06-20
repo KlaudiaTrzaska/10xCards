@@ -5,7 +5,8 @@
 | id | testing-bootstrap-generation-resilience |
 | created | 2026-06-20 |
 | updated | 2026-06-20 |
-| status | implementing |
+| status | archived |
+| archived_at | 2026-06-20T19:58:06Z |
 | type | test-rollout |
 
 ## Summary
