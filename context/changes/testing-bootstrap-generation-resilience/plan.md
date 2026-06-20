@@ -360,8 +360,8 @@ No database migrations. No schema changes. The `CardSchema` `.trim()` change aff
 #### Automated
 
 - [ ] 4.1 CI workflow passes (lint → test → build all green) on push
-- [x] 4.2 `npm run build` passes with SUPABASE secrets set
+- [x] 4.2 `npm run build` passes with SUPABASE secrets set — 921e097
 
 #### Manual
 
-- [x] 4.3 `context/foundation/test-plan.md §6` sub-sections are actionable without reading research.md
+- [x] 4.3 `context/foundation/test-plan.md §6` sub-sections are actionable without reading research.md — 921e097
