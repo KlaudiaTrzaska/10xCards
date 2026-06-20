@@ -359,7 +359,7 @@ No database migrations. No schema changes. The `CardSchema` `.trim()` change aff
 
 #### Automated
 
-- [ ] 4.1 CI workflow passes (lint → test → build all green) on push
+- [x] 4.1 CI workflow passes (lint → test → build all green) on push — 09454a8
 - [x] 4.2 `npm run build` passes with SUPABASE secrets set — 921e097
 
 #### Manual
