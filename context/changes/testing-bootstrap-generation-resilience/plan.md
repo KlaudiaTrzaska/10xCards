@@ -346,9 +346,9 @@ No database migrations. No schema changes. The `CardSchema` `.trim()` change aff
 
 #### Automated
 
-- [x] 3.1 `npm test` passes with all 17 tests, 0 failures
-- [x] 3.2 `npm run lint` passes
-- [x] 3.3 `npm run build` passes
+- [x] 3.1 `npm test` passes with all 17 tests, 0 failures — 67a4836
+- [x] 3.2 `npm run lint` passes — 67a4836
+- [x] 3.3 `npm run build` passes — 67a4836
 
 #### Manual
 
@@ -360,8 +360,8 @@ No database migrations. No schema changes. The `CardSchema` `.trim()` change aff
 #### Automated
 
 - [ ] 4.1 CI workflow passes (lint → test → build all green) on push
-- [ ] 4.2 `npm run build` passes with SUPABASE secrets set
+- [x] 4.2 `npm run build` passes with SUPABASE secrets set
 
 #### Manual
 
-- [ ] 4.3 `context/foundation/test-plan.md §6` sub-sections are actionable without reading research.md
+- [x] 4.3 `context/foundation/test-plan.md §6` sub-sections are actionable without reading research.md

@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-06-20 (Phase 1 change opened)
+> Last updated: 2026-06-20 (Phase 1 complete)
 
 ---
 
@@ -81,7 +81,7 @@ orchestrator updates Status as artifacts appear on disk.
 
 | # | Phase name | Goal (one line) | Risks covered | Test types | Status | Change folder |
 |---|------------|-----------------|---------------|------------|--------|---------------|
-| 1 | Bootstrap + generation resilience | Set up Vitest and prove LLM malformed-response handling and paste validation | #1, #7 | unit + integration | planned | context/changes/testing-bootstrap-generation-resilience/ |
+| 1 | Bootstrap + generation resilience | Set up Vitest and prove LLM malformed-response handling and paste validation | #1, #7 | unit + integration | complete | context/changes/testing-bootstrap-generation-resilience/ |
 | 2 | Generation & deck flow integration | Protect curation → atomic save → deck CRUD paths that change most often | #2, #5 | integration | not started | — |
 | 3 | SRS integrity + data boundary | Review history consistency and cross-user access denied | #3, #4 | integration | not started | — |
 | 4 | Quality-gates wiring | Lock lint + tests in CI; no new test types | cross-cutting | CI gate | not started | — |
@@ -145,15 +145,40 @@ the relevant rollout phase ships; before that, the sub-section reads
 
 ### 6.1 Adding a unit test
 
-TBD — see §3 Phase 1 (Bootstrap + generation resilience).
+Place new unit test files under `src/lib/services/__tests__/` (or a sibling `__tests__/` folder next to the module under test).
+
+Key conventions:
+
+- Import test utilities with explicit named imports — `import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"`. No `globals: true` in `vitest.config.ts`.
+- Mock `fetch` at the global edge with `vi.stubGlobal("fetch", vi.fn())` in `beforeEach`; restore with `vi.unstubAllGlobals()` in `afterEach`.
+- Construct mock `Response` objects inline:
+  ```typescript
+  new Response(JSON.stringify(payload), { status: 200, headers: { "Content-Type": "application/json" } })
+  ```
+- Assert on `GenerationError` using `instanceof` and string-contains checks on `.message`, not exact wording — the message text may change, but the shape must not.
+- Canonical examples: `src/lib/services/__tests__/generation.test.ts` (tests U1–U11).
 
 ### 6.2 Adding an integration test
 
-TBD — see §3 Phase 1 (Bootstrap + generation resilience).
+Place new API-route integration test files under `src/pages/api/__tests__/`.
+
+Key conventions:
+
+- Two `vi.mock()` calls at module scope (hoisted by Vitest before imports execute):
+  - `vi.mock("@/lib/services/generation", () => ({ ... }))` — replace `generateCards` with `vi.fn()`; inline any error classes the factory needs (avoids hoisting conflicts with `importOriginal`).
+  - `vi.mock("@/lib/supabase", () => ({ createClient: vi.fn() }))`.
+- Build a minimal `makeCtx(body, user?)` helper that constructs a native `Request` with `method: "POST"`, `Content-Type: application/json`, and `body: JSON.stringify(body)`. Cast the result to `Parameters<APIRoute>[0]` via `as unknown as Parameters<APIRoute>[0]`.
+- Invoke the exported route handler directly — `const res = await POST(makeCtx(...))` — and inspect the returned `Response`: `res.status`, `await res.json()`.
+- Type the parsed body with a local interface (`interface ApiBody { error?: string; ... }`) to satisfy `@typescript-eslint/no-unsafe-member-access`.
+- Canonical examples: `src/pages/api/__tests__/generate.test.ts` (tests I1–I6).
 
 ### 6.3 Adding a test for the LLM generation path
 
-TBD — see §3 Phase 1. Pattern: mock at HTTP edge only; assert malformed-response error handling and happy-path draft output without hitting real OpenRouter.
+**Rule: never call real OpenRouter in tests.**
+
+- **Unit tests of `generateCards()`** — mock `fetch` with `vi.stubGlobal("fetch", vi.fn())`. Shape the mock `Response` to simulate every branch: HTTP error, malformed JSON, schema mismatch, whitespace-only fields, fewer cards than requested, happy path. See U1–U11 in `src/lib/services/__tests__/generation.test.ts`.
+- **API route integration tests** — mock `generateCards` itself with `vi.mock("@/lib/services/generation", ...)` and drive the route handler directly. This isolates the route's error-translation and validation logic from the service. See I1–I6 in `src/pages/api/__tests__/generate.test.ts`.
+- **Never** mock at the Supabase or database layer to simulate LLM failures — the mock must sit at the HTTP boundary (`fetch`) or the service boundary (`generateCards`), depending on which layer is under test.
 
 ### 6.4 Adding a test for the curation → save-deck flow
 
