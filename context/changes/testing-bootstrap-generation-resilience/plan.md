@@ -322,25 +322,25 @@ No database migrations. No schema changes. The `CardSchema` `.trim()` change aff
 
 #### Automated
 
-- [x] 1.1 `npm test` exits 0 with "No test files found"
-- [x] 1.2 `npm run lint` passes after new files added
-- [x] 1.3 `npm run build` passes
+- [x] 1.1 `npm test` exits 0 with "No test files found" — 2593033
+- [x] 1.2 `npm run lint` passes after new files added — 2593033
+- [x] 1.3 `npm run build` passes — 2593033
 
 #### Manual
 
-- [x] 1.4 `npm test` runs locally without Astro runtime errors
+- [x] 1.4 `npm test` runs locally without Astro runtime errors — 2593033
 
 ### Phase 2: Service-layer fixes + unit tests
 
 #### Automated
 
-- [ ] 2.1 `npm test` passes with 11 tests, 0 failures
-- [ ] 2.2 `npm run lint` passes
-- [ ] 2.3 `npm run build` passes
+- [x] 2.1 `npm test` passes with 11 tests, 0 failures
+- [x] 2.2 `npm run lint` passes
+- [x] 2.3 `npm run build` passes
 
 #### Manual
 
-- [ ] 2.4 Temporarily revert one fix — confirm the corresponding test fails (proves tests catch the bug)
+- [x] 2.4 Temporarily revert one fix — confirm the corresponding test fails (proves tests catch the bug)
 
 ### Phase 3: API route fix + integration tests
 

@@ -16,15 +16,15 @@ export class GenerationError extends Error {
 }
 
 const CardSchema = z.object({
-  front: z.string().min(1),
-  back: z.string().min(1),
-});
-
-const ResponseSchema = z.object({
-  cards: z.array(CardSchema).min(1),
+  front: z.string().trim().min(1),
+  back: z.string().trim().min(1),
 });
 
 export async function generateCards(sourceText: string, count: 5 | 10 | 15, apiKey: string): Promise<CardCandidate[]> {
+  const ResponseSchema = z.object({
+    cards: z.array(CardSchema).min(count),
+  });
+
   const systemPrompt = `You are a flashcard generator. Given study material, generate exactly ${count} flashcards as a JSON object with a "cards" array. Each card has "front" (question or concept) and "back" (answer or definition). Focus on key facts, definitions, and concepts.`;
 
   let response: Response;
