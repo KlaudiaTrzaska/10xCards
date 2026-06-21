@@ -13,8 +13,8 @@ const RequestSchema = z
     edited: z.array(
       z.object({
         id: z.uuid(),
-        front: z.string().min(1).max(1000),
-        back: z.string().min(1).max(1000),
+        front: z.string().trim().min(1).max(1000),
+        back: z.string().trim().min(1).max(1000),
       }),
     ),
     discarded: z.array(z.uuid()),
