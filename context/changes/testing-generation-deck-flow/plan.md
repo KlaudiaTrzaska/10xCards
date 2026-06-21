@@ -371,24 +371,24 @@ Key conventions:
 
 #### Automated
 
-- [x] 1.1 `npm run lint` passes with no new errors
-- [x] 1.2 `npm test` — S1–S9 all pass
+- [x] 1.1 `npm run lint` passes with no new errors — a3f0de6
+- [x] 1.2 `npm test` — S1–S9 all pass — a3f0de6
 
 #### Manual
 
-- [x] 1.3 `src/pages/api/__tests__/save-deck.test.ts` exists with 9 test cases
-- [x] 1.4 `save-deck.ts` lines 13-14 use `.trim().min(1).max(1000)` for both `front` and `back`
+- [x] 1.3 `src/pages/api/__tests__/save-deck.test.ts` exists with 9 test cases — a3f0de6
+- [x] 1.4 `save-deck.ts` lines 13-14 use `.trim().min(1).max(1000)` for both `front` and `back` — a3f0de6
 
 ### Phase 2: Deck list + create integration tests
 
 #### Automated
 
-- [ ] 2.1 `npm run lint` passes with no new errors
-- [ ] 2.2 `npm test` — D1–D8 all pass (S1–S9 still green)
+- [x] 2.1 `npm run lint` passes with no new errors
+- [x] 2.2 `npm test` — D1–D8 all pass (S1–S9 still green)
 
 #### Manual
 
-- [ ] 2.3 `src/pages/api/__tests__/deck-index.test.ts` exists with 8 test cases
+- [x] 2.3 `src/pages/api/__tests__/deck-index.test.ts` exists with 8 test cases
 
 ### Phase 3: Deck edit + delete integration tests
 
