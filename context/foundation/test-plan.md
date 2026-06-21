@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-06-20 (Phase 1 complete)
+> Last updated: 2026-06-21 (Phase 3 complete)
 
 ---
 
@@ -90,7 +90,7 @@ orchestrator updates Status as artifacts appear on disk.
 | --- | ---------------------------------- | ---------------------------------------------------------------------------- | ------------- | ------------------ | ------------- | -------------------------------------------------------- |
 | 1   | Bootstrap + generation resilience  | Set up Vitest and prove LLM malformed-response handling and paste validation | #1, #7        | unit + integration | complete      | context/changes/testing-bootstrap-generation-resilience/ |
 | 2   | Generation & deck flow integration | Protect curation → atomic save → deck CRUD paths that change most often      | #2, #5        | integration        | complete      | context/changes/testing-generation-deck-flow/            |
-| 3   | SRS integrity + data boundary      | Review history consistency and cross-user access denied                      | #3, #4        | integration        | not started   | —                                                        |
+| 3   | SRS integrity + data boundary      | Review history consistency and cross-user access denied                      | #3, #4        | integration        | complete      | context/changes/testing-srs-integrity-data-boundary/     |
 | 4   | Quality-gates wiring               | Lock lint + tests in CI; no new test types                                   | cross-cutting | CI gate            | not started   | —                                                        |
 
 
@@ -211,7 +211,25 @@ Key conventions:
 
 ### 6.5 Adding a test for the SRS review path
 
-TBD — see §3 Phase 3 (SRS integrity + data boundary). Pattern: two-user DB fixture; assert append-only `review_logs` and FSRS column updates without re-implementing algorithm logic.
+Place new study/review integration test files under `src/pages/api/__tests__/study/`.
+
+Key conventions:
+
+- One `vi.mock()` call at module scope (hoisted):
+  - `vi.mock("@/lib/supabase", () => ({ createClient: vi.fn() }))`.
+- Build a `makeReviewSupabase({ card?, insertError?, updateError? })` factory that routes the three sequential DB calls in `review.ts` by call-count:
+  - **Call 1** — `from("flashcards")` SELECT: `.select("*").eq().eq().eq().single()` → `{ data: card, error }`. Pass `card: null` to simulate a not-found / IDOR scenario (returns `{ code: "PGRST116" }`).
+  - **Call 2** — `from("review_logs")` INSERT: `.insert({})` → `{ error: insertError ?? null }`.
+  - **Call 3** — `from("flashcards")` UPDATE: `.update({}).eq().eq()` → `{ error: updateError ?? null }`.
+  - Make `from` a `vi.fn()` so callers can inspect `from.mock.calls` (e.g. assert `review_logs` INSERT was never reached after a 404).
+- Build a `makeCtx(body, user?)` helper that constructs a native `Request` with `method: "POST"`, `Content-Type: application/json`, and `body: JSON.stringify(body)`. Cast to `Parameters<APIRoute>[0]` via `as unknown as Parameters<APIRoute>[0]`.
+- Invoke the exported route handler directly — `const res = await POST(makeCtx(...))` — and inspect the returned `Response`: `res.status`, `await res.json()`.
+- Type the parsed body with a local interface (`interface ReviewBody { scheduledFor?: string; outcome?: string; error?: string }`) to satisfy `@typescript-eslint/no-unsafe-member-access`.
+- Use RFC 4122-compliant UUIDs in test constants (version nibble `[1-8]`, variant nibble `[89abAB]`) — Zod v4 rejects non-standard UUIDs. Example: `"00000000-0000-4000-a000-000000000001"`.
+- **IDOR proof pattern**: define `USER_A_ID` and `USER_B_ID` constants. Call `makeCtx(payload, { id: USER_B_ID })` while `payload.cardId` is owned by `USER_A_ID`. Pass `card: null` to the mock so SELECT returns not-found. Assert `status 404` and that `from.mock.calls` does not include `"review_logs"` — proving the ownership check short-circuits before any INSERT.
+- **Non-atomic write comment convention**: when testing the INSERT-succeeds / UPDATE-fails path (R10 pattern), add a code comment stating: *"The review_logs INSERT already persisted — this documents the non-atomic design (review.ts:74-76). In production, the user would re-grade and a second log would be created."*
+- Reset per-test state with `vi.clearAllMocks()` in `beforeEach` — the call-count inside each mock closure resets automatically when `makeReviewSupabase` is called fresh per test.
+- Canonical examples: `src/pages/api/__tests__/study/review.test.ts` (tests R1–R10).
 
 ### 6.6 Per-rollout-phase notes
 

@@ -306,21 +306,21 @@ Fills in `test-plan.md §6.5` with the canonical SRS review test pattern, then m
 
 #### Automated
 
-- [x] 2.1 `npm test` passes — D1–D2 present and green
-- [x] 2.2 `npm run lint` passes on `src/pages/api/__tests__/study/due.test.ts`
+- [x] 2.1 `npm test` passes — D1–D2 present and green — 3d8db45
+- [x] 2.2 `npm run lint` passes on `src/pages/api/__tests__/study/due.test.ts` — 3d8db45
 
 #### Manual
 
-- [x] 2.3 D2 response shape includes `cards`, `total_due`, `total_accepted`, `next_due_at`
+- [x] 2.3 D2 response shape includes `cards`, `total_due`, `total_accepted`, `next_due_at` — 3d8db45
 
 ### Phase 3: Cookbook update and test-plan status
 
 #### Automated
 
-- [ ] 3.1 `npm test` passes (no regressions)
-- [ ] 3.2 `npm run lint` passes
+- [x] 3.1 `npm test` passes (no regressions)
+- [x] 3.2 `npm run lint` passes
 
 #### Manual
 
-- [ ] 3.3 `test-plan.md §6.5` filled in with canonical review test pattern
-- [ ] 3.4 `test-plan.md §3` Phase 3 row Status = `complete`
+- [x] 3.3 `test-plan.md §6.5` filled in with canonical review test pattern
+- [x] 3.4 `test-plan.md §3` Phase 3 row Status = `complete`
