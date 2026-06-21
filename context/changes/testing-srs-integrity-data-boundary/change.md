@@ -1,7 +1,7 @@
 ---
 change_id: testing-srs-integrity-data-boundary
 title: SRS integrity and cross-user data boundary integration tests (Phase 3)
-status: implementing
+status: implemented
 created: 2026-06-21
 updated: 2026-06-21
 archived_at: null

@@ -317,10 +317,10 @@ Fills in `test-plan.md §6.5` with the canonical SRS review test pattern, then m
 
 #### Automated
 
-- [x] 3.1 `npm test` passes (no regressions)
-- [x] 3.2 `npm run lint` passes
+- [x] 3.1 `npm test` passes (no regressions) — e6a753d
+- [x] 3.2 `npm run lint` passes — e6a753d
 
 #### Manual
 
-- [x] 3.3 `test-plan.md §6.5` filled in with canonical review test pattern
-- [x] 3.4 `test-plan.md §3` Phase 3 row Status = `complete`
+- [x] 3.3 `test-plan.md §6.5` filled in with canonical review test pattern — e6a753d
+- [x] 3.4 `test-plan.md §3` Phase 3 row Status = `complete` — e6a753d
