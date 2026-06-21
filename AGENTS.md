@@ -19,7 +19,7 @@
 - `npm run lint:fix` — auto-fix lint issues
 - `npm run format` — Prettier with Astro + Tailwind plugins
 
-CI (`@.github/workflows/ci.yml`) runs `lint` then `build` on every push and PR to `master`. Set `SUPABASE_URL` and `SUPABASE_KEY` as GitHub repository secrets for CI builds.
+CI (`@.github/workflows/ci.yml`) runs `lint` then `build` on every push and PR to `main`. Set `SUPABASE_URL` and `SUPABASE_KEY` as GitHub repository secrets for CI builds.
 
 ## Project Structure
 
