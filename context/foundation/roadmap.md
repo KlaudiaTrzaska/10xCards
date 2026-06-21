@@ -21,7 +21,7 @@ Profesjonaliści uczący się materiału do pracy lub certyfikacji tracą czas n
 
 ## North star
 
-**✅ US-01 loop shipped (2026-06-10).** Pełny przepływ od wklejonego tekstu do pierwszej oceny karty w sesji nauki jest zaimplementowany: F-01 → S-01 → S-02 → S-04 (+ S-03 deck CRUD, S-05 account deletion).
+**✅ US-01 loop shipped (2026-06-10).** Pełny przepływ od wklejonego tekstu do pierwszej oceny karty w sesji nauki jest zaimplementowany: F-01 → S-01 → S-02 → S-04 (+ S-03 deck CRUD, S-05 account deletion, S-06 UX polish).
 
 **Next focus:** walidacja metryk sukcesu z PRD (≥75% akceptacji draftów, ≥75% kart z AI, median paste→accept <5 min) oraz domknięcie produkcji (custom domain, monitoring, rollback — patrz `context/changes/deployment/deployment-plan.md` fazy 5–10).
 
@@ -36,13 +36,13 @@ Profesjonaliści uczący się materiału do pracy lub certyfikacji tracą czas n
 | S-03 | `deck-edit-delete` | przeglądać talię, ręcznie stworzyć fiszkę, edytować i usuwać karty | S-02 | FR-006, FR-007 | done |
 | S-04 | `srs-review-session` | rozpocząć sesję nauki, zobaczyć zaplanowane karty i zapisać ocenę każdej powtórki | S-02 | FR-008, FR-009, US-01 | done |
 | S-05 | `account-deletion-with-retention` | usunąć konto z 30-dniowym okresem retencji danych przed trwałym usunięciem | F-01 | FR-001, FR-002 | done |
-| S-06 | `ux-improvements` | masowo ocenić kandydatów, zresetować sesję nauki i widzieć czytelne stany ładowania | F-01 | FR-005, FR-008, US-01 | planned |
+| S-06 | `ux-improvements` | masowo ocenić kandydatów, zresetować sesję nauki i widzieć czytelne stany ładowania | F-01 | FR-005, FR-008, US-01 | done |
 
 ## Baseline
 
 What's already in place in the codebase as of `2026-06-13` (auto-researched from git history + codebase).
 
-- **Frontend:** present — Astro 6 + React 19 + Tailwind 4 + shadcn/ui; strony produktowe: `/home`, `/generate`, `/deck`, `/study`, `/settings`; komponenty w `src/components/`
+- **Frontend:** present — Astro 6 + React 19 + Tailwind 4 + shadcn/ui; strony produktowe: `/home`, `/generate`, `/deck`, `/study`, `/settings`; bulk curation shortcuts + sticky save footer na `/generate`; End session na `/study`; spójne spinnery ładowania
 - **Backend / API:** present — auth (`src/pages/api/auth/*.ts`), generacja (`/api/generate`), kuracja (`/api/save-deck`), talia CRUD (`/api/deck`, `/api/deck/[id]`), sesja nauki (`/api/study/due`, `/api/study/review`), usunięcie konta (`/api/account/delete`)
 - **Data:** present — 7 migracji Supabase (`flashcards`, `generations`, `review_logs`, `profiles`, FSRS columns, soft-delete, purge cron); RLS per tabela
 - **Auth:** present — Supabase Auth, cookie-based SSR sessions; middleware negatywny (allow-list publicznych tras: `/`, `/auth`, `/api/auth`, `/sitemap`); `returnTo` w flow logowania
@@ -151,17 +151,16 @@ What's already in place in the codebase as of `2026-06-13` (auto-researched from
 - **Blockers:** —
 - **Unknowns:** —
 - **Risk:** Akcje masowe muszą zachować semantykę atomowego zapisu (S-02); reset sesji nie może naruszyć historii powtórek (NFR)
-- **Status:** planned
+- **Status:** `impl_reviewed` 2026-06-13 — merged to `main` (`1cfd3f1`). Bulk accept/discard/clear w `CurationPanel`, progress + sticky footer, End session → `/deck`, spinnery na deck/modal/study, calendar-aware „tomorrow” w `format-interval.ts`. → `context/changes/ux-improvements/`.
 
 ## Backlog Handoff
 
 | Roadmap ID | Change ID | Suggested issue title | Ready for `/10x-plan` | Notes |
 |---|---|---|---|---|
-| S-06 | `ux-improvements` | Bulk curation actions, study session reset, loading states | yes | Dotyka kuracji (S-02) i sesji nauki (S-04) |
 | — | `deployment` (follow-ups) | Custom domain, preview security, rollback docs | yes | Fazy 5–10 w `context/changes/deployment/deployment-plan.md` |
 | — | — | Validate PRD success metrics with real users | no | Wymaga użytkowników produkcyjnych; nie ma dedykowanego change folder |
 
-> Slice'y MVP (F-01, F-02, S-01–S-05) są zaimplementowane. S-06 to planowane domknięcie UX; poza tym hardening produkcji i walidacja hipotezy produktowej.
+> Wszystkie slice'y roadmapy MVP (F-01, F-02, S-01–S-06) są zaimplementowane. Kolejne prace to hardening produkcji i walidacja hipotezy produktowej.
 
 ## Open Roadmap Questions
 
@@ -190,3 +189,4 @@ What's already in place in the codebase as of `2026-06-13` (auto-researched from
 - **S-03: przeglądanie talii, ręczne tworzenie, edycja i usuwanie kart** — Implemented 2026-06-08 → `context/changes/deck-edit-delete/`. `/deck` + CRUD API + lock-after-first-review.
 - **S-04: sesja nauki z algorytmem SR i zapisem ocen** — Impl reviewed 2026-06-10 → `context/changes/srs-review-session/`. `ts-fsrs` + `/study` + `review_logs`.
 - **S-05: usunięcie konta z 30-dniowym okresem retencji** — Archived 2026-06-13 → `context/archive/2026-06-10-account-deletion-with-retention/`. Soft-delete + Edge Function purge cron + `/settings`.
+- **S-06: UX improvements (bulk curation, study exit, loading states)** — Impl reviewed 2026-06-13 → `context/changes/ux-improvements/`. Bulk shortcuts + sticky save na `/generate`, End session na `/study`, spinnery + calendar „tomorrow” labels.
