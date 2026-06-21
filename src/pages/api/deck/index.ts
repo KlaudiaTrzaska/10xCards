@@ -47,7 +47,7 @@ export const GET: APIRoute = async (context) => {
 
   const response: DeckListResponseDTO = {
     cards: data,
-    total: count,
+    total: count ?? 0,
     page,
     pageSize: PAGE_SIZE,
   };
