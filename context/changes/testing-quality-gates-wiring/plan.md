@@ -154,23 +154,23 @@ Verify that GitHub enforces the CI gate before merge, then mark the test-plan Ph
 
 #### Automated
 
-- [x] 1.1 `npm run lint` exits 0 with zero errors and zero warnings
-- [x] 1.2 `npm test` exits 0 (no regressions)
+- [x] 1.1 `npm run lint` exits 0 with zero errors and zero warnings — 2d7e383
+- [x] 1.2 `npm test` exits 0 (no regressions) — 2d7e383
 
 #### Manual
 
-- [x] 1.3 `package.json` lint script reads `"eslint . --max-warnings=0"`
-- [x] 1.4 `CLAUDE.md:54` reads "push and PR to `main`"
-- [x] 1.5 `AGENTS.md:22` reads "push and PR to `main`"
+- [x] 1.3 `package.json` lint script reads `"eslint . --max-warnings=0"` — 2d7e383
+- [x] 1.4 `CLAUDE.md:54` reads "push and PR to `main`" — 2d7e383
+- [x] 1.5 `AGENTS.md:22` reads "push and PR to `main`" — 2d7e383
 
 ### Phase 2: Branch protection verification + test-plan closure
 
 #### Automated
 
-- [ ] 2.1 `npm test` exits 0 (no regressions from doc changes)
-- [ ] 2.2 `npm run lint` exits 0
+- [x] 2.1 `npm test` exits 0 (no regressions from doc changes)
+- [x] 2.2 `npm run lint` exits 0
 
 #### Manual
 
-- [ ] 2.3 GitHub `main` branch protection rule requires `CI / ci` check to pass before merge
-- [ ] 2.4 `test-plan.md §3` Phase 4 row Status = `complete`
+- [x] 2.3 GitHub `main` branch protection rule requires `CI / ci` check to pass before merge (rule configured; "Not enforced" — free private-repo plan requires GitHub Team/Enterprise to enforce)
+- [x] 2.4 `test-plan.md §3` Phase 4 row Status = `complete`

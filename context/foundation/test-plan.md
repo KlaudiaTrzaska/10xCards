@@ -6,7 +6,7 @@
 >
 > Refresh: re-run `/10x-test-plan --refresh` when stale (see §8).
 >
-> Last updated: 2026-06-21 (Phase 3 complete)
+> Last updated: 2026-06-21 (Phase 4 complete)
 
 ---
 
@@ -91,7 +91,7 @@ orchestrator updates Status as artifacts appear on disk.
 | 1   | Bootstrap + generation resilience  | Set up Vitest and prove LLM malformed-response handling and paste validation | #1, #7        | unit + integration | complete      | context/changes/testing-bootstrap-generation-resilience/ |
 | 2   | Generation & deck flow integration | Protect curation → atomic save → deck CRUD paths that change most often      | #2, #5        | integration        | complete      | context/changes/testing-generation-deck-flow/            |
 | 3   | SRS integrity + data boundary      | Review history consistency and cross-user access denied                      | #3, #4        | integration        | complete      | context/changes/testing-srs-integrity-data-boundary/     |
-| 4   | Quality-gates wiring               | Lock lint + tests in CI; no new test types                                   | cross-cutting | CI gate            | not started   | —                                                        |
+| 4   | Quality-gates wiring               | Lock lint + tests in CI; no new test types                                   | cross-cutting | CI gate            | complete      | context/changes/testing-quality-gates-wiring/            |
 
 
 **Status vocabulary** (fixed — parser literals):
