@@ -294,24 +294,24 @@ Fills in `test-plan.md §6.5` with the canonical SRS review test pattern, then m
 
 #### Automated
 
-- [x] 1.1 `npm test` passes — all R1–R10 tests present and green
-- [x] 1.2 `npm run lint` passes on `src/pages/api/__tests__/study/review.test.ts`
+- [x] 1.1 `npm test` passes — all R1–R10 tests present and green — 0871f77
+- [x] 1.2 `npm run lint` passes on `src/pages/api/__tests__/study/review.test.ts` — 0871f77
 
 #### Manual
 
-- [x] 1.3 R4 (IDOR test) explicitly names USER_A / USER_B and includes a comment identifying it as the IDOR proof
-- [x] 1.4 R10 carries the non-atomic INSERT comment referencing `review.ts:74-76`
+- [x] 1.3 R4 (IDOR test) explicitly names USER_A / USER_B and includes a comment identifying it as the IDOR proof — 0871f77
+- [x] 1.4 R10 carries the non-atomic INSERT comment referencing `review.ts:74-76` — 0871f77
 
 ### Phase 2: GET /api/study/due minimal tests
 
 #### Automated
 
-- [ ] 2.1 `npm test` passes — D1–D2 present and green
-- [ ] 2.2 `npm run lint` passes on `src/pages/api/__tests__/study/due.test.ts`
+- [x] 2.1 `npm test` passes — D1–D2 present and green
+- [x] 2.2 `npm run lint` passes on `src/pages/api/__tests__/study/due.test.ts`
 
 #### Manual
 
-- [ ] 2.3 D2 response shape includes `cards`, `total_due`, `total_accepted`, `next_due_at`
+- [x] 2.3 D2 response shape includes `cards`, `total_due`, `total_accepted`, `next_due_at`
 
 ### Phase 3: Cookbook update and test-plan status
 
