@@ -383,24 +383,24 @@ Key conventions:
 
 #### Automated
 
-- [x] 2.1 `npm run lint` passes with no new errors
-- [x] 2.2 `npm test` — D1–D8 all pass (S1–S9 still green)
+- [x] 2.1 `npm run lint` passes with no new errors — e6a8ec8
+- [x] 2.2 `npm test` — D1–D8 all pass (S1–S9 still green) — e6a8ec8
 
 #### Manual
 
-- [x] 2.3 `src/pages/api/__tests__/deck-index.test.ts` exists with 8 test cases
+- [x] 2.3 `src/pages/api/__tests__/deck-index.test.ts` exists with 8 test cases — e6a8ec8
 
 ### Phase 3: Deck edit + delete integration tests
 
 #### Automated
 
-- [ ] 3.1 `npm run lint` passes with no new errors
-- [ ] 3.2 `npm test` — E1–E12 all pass (S1–S9, D1–D8 still green)
+- [x] 3.1 `npm run lint` passes with no new errors
+- [x] 3.2 `npm test` — E1–E12 all pass (S1–S9, D1–D8 still green)
 
 #### Manual
 
-- [ ] 3.3 `src/pages/api/__tests__/deck-id.test.ts` exists with 12 test cases
-- [ ] 3.4 Total new test count: 29 (S + D + E combined)
+- [x] 3.3 `src/pages/api/__tests__/deck-id.test.ts` exists with 12 test cases
+- [x] 3.4 Total new test count: 29 (S + D + E combined)
 
 ### Phase 4: Cookbook update
 
