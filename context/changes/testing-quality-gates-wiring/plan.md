@@ -167,10 +167,10 @@ Verify that GitHub enforces the CI gate before merge, then mark the test-plan Ph
 
 #### Automated
 
-- [x] 2.1 `npm test` exits 0 (no regressions from doc changes)
-- [x] 2.2 `npm run lint` exits 0
+- [x] 2.1 `npm test` exits 0 (no regressions from doc changes) — 132629f
+- [x] 2.2 `npm run lint` exits 0 — 132629f
 
 #### Manual
 
-- [x] 2.3 GitHub `main` branch protection rule requires `CI / ci` check to pass before merge (rule configured; "Not enforced" — free private-repo plan requires GitHub Team/Enterprise to enforce)
-- [x] 2.4 `test-plan.md §3` Phase 4 row Status = `complete`
+- [x] 2.3 GitHub `main` branch protection rule requires `CI / ci` check to pass before merge (rule configured; "Not enforced" — free private-repo plan requires GitHub Team/Enterprise to enforce) — 132629f
+- [x] 2.4 `test-plan.md §3` Phase 4 row Status = `complete` — 132629f
