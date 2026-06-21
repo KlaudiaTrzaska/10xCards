@@ -406,10 +406,10 @@ Key conventions:
 
 #### Automated
 
-- [x] 4.1 `npm run lint` passes
-- [x] 4.2 `npm test` — full suite green (no regressions)
+- [x] 4.1 `npm run lint` passes — 8d83701
+- [x] 4.2 `npm test` — full suite green (no regressions) — 8d83701
 
 #### Manual
 
-- [x] 4.3 `§6.4` in `test-plan.md` is filled in (not "TBD")
-- [x] 4.4 Phase 2 row in §3 rollout table reads `complete`
+- [x] 4.3 `§6.4` in `test-plan.md` is filled in (not "TBD") — 8d83701
+- [x] 4.4 Phase 2 row in §3 rollout table reads `complete` — 8d83701
