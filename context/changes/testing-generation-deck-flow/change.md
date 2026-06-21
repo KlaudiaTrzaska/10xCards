@@ -1,7 +1,7 @@
 ---
 change_id: testing-generation-deck-flow
 title: Testing generation deck flow
-status: implementing
+status: implemented
 created: 2026-06-21
 updated: 2026-06-21
 archived_at: null

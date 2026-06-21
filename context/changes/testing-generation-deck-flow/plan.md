@@ -394,22 +394,22 @@ Key conventions:
 
 #### Automated
 
-- [x] 3.1 `npm run lint` passes with no new errors
-- [x] 3.2 `npm test` — E1–E12 all pass (S1–S9, D1–D8 still green)
+- [x] 3.1 `npm run lint` passes with no new errors — 85ac755
+- [x] 3.2 `npm test` — E1–E12 all pass (S1–S9, D1–D8 still green) — 85ac755
 
 #### Manual
 
-- [x] 3.3 `src/pages/api/__tests__/deck-id.test.ts` exists with 12 test cases
-- [x] 3.4 Total new test count: 29 (S + D + E combined)
+- [x] 3.3 `src/pages/api/__tests__/deck-id.test.ts` exists with 12 test cases — 85ac755
+- [x] 3.4 Total new test count: 29 (S + D + E combined) — 85ac755
 
 ### Phase 4: Cookbook update
 
 #### Automated
 
-- [ ] 4.1 `npm run lint` passes
-- [ ] 4.2 `npm test` — full suite green (no regressions)
+- [x] 4.1 `npm run lint` passes
+- [x] 4.2 `npm test` — full suite green (no regressions)
 
 #### Manual
 
-- [ ] 4.3 `§6.4` in `test-plan.md` is filled in (not "TBD")
-- [ ] 4.4 Phase 2 row in §3 rollout table reads `complete`
+- [x] 4.3 `§6.4` in `test-plan.md` is filled in (not "TBD")
+- [x] 4.4 Phase 2 row in §3 rollout table reads `complete`
