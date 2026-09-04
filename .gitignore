@@ -29,3 +29,8 @@ pnpm-debug.log*
 
 # cursor skills
 .cursor/skills/
+
+# Playwright
+playwright/.auth/
+playwright-report/
+test-results/
