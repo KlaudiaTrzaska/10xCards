@@ -92,6 +92,7 @@ orchestrator updates Status as artifacts appear on disk.
 | 2   | Generation & deck flow integration | Protect curation → atomic save → deck CRUD paths that change most often      | #2, #5        | integration        | complete      | context/changes/testing-generation-deck-flow/            |
 | 3   | SRS integrity + data boundary      | Review history consistency and cross-user access denied                      | #3, #4        | integration        | complete      | context/changes/testing-srs-integrity-data-boundary/     |
 | 4   | Quality-gates wiring               | Lock lint + tests in CI; no new test types                                   | cross-cutting | CI gate            | complete      | context/changes/testing-quality-gates-wiring/            |
+| 5   | E2E on highest-risk user paths     | Browser-level proof for persistence-after-reload and the auth gate           | #1, #2, #6    | e2e                | complete      | `e2e/` + `e2e/E2E-RULES.md` (no change folder)            |
 
 
 **Status vocabulary** (fixed — parser literals):
@@ -119,9 +120,9 @@ plus the MCP/tools actually exposed in the current session.
 
 | Layer              | Tool               | Version                | Notes                                                        |
 | ------------------ | ------------------ | ---------------------- | ------------------------------------------------------------ |
-| unit + integration | Vitest             | none yet — see Phase 1 | No runner config or test files exist; Phase 1 bootstraps     |
-| API mocking        | MSW or Vitest mock | none yet — see Phase 1 | HTTP-edge mocking choice to be confirmed by research         |
-| e2e                | none yet           | —                      | Deferred; integration catches most flow breaks at lower cost |
+| unit + integration | Vitest             | ^4.1.9                 | Configured in `vitest.config.ts`; suites under `src/**/__tests__/` |
+| API mocking        | Vitest `vi.mock`   | ^4.1.9                 | Mock at the `fetch` edge or the service boundary — see §6.3  |
+| e2e                | Playwright         | ^1.61.0                | `e2e/`, config in `playwright.config.ts`; rules in `e2e/E2E-RULES.md` |
 | accessibility      | none yet           | —                      | Out of scope for MVP rollout                                 |
 
 
@@ -148,6 +149,7 @@ phase lands; before that, the gate is `planned`.
 | integration (flow + data) | local + CI | required after §3 Phase 2 | curation, save-deck, deck CRUD regressions     |
 | integration (SRS + RLS)   | local + CI | required after §3 Phase 3 | review history corruption, IDOR                |
 | test step in CI YAML      | CI         | required after §3 Phase 4 | all of the above gated before merge            |
+| e2e (Playwright)          | local + CI | required after §3 Phase 5 | data loss across reload, auth-gate regressions |
 
 
 ---
@@ -231,7 +233,38 @@ Key conventions:
 - Reset per-test state with `vi.clearAllMocks()` in `beforeEach` — the call-count inside each mock closure resets automatically when `makeReviewSupabase` is called fresh per test.
 - Canonical examples: `src/pages/api/__tests__/study/review.test.ts` (tests R1–R10).
 
-### 6.6 Per-rollout-phase notes
+### 6.6 Adding an e2e test
+
+Place new Playwright specs in `e2e/`. Read `e2e/E2E-RULES.md` first and copy
+the shape of `e2e/seed.spec.ts`.
+
+Key conventions:
+
+- Run with `npm run test:e2e`. `E2E_EMAIL` / `E2E_PASSWORD` must be set; the
+  `setup` project logs in once and writes `playwright/.auth/user.json`, which
+  every other test inherits via `storageState`.
+- Locators: `getByRole` → `getByLabel` → `getByText(marker)`. No CSS
+  selectors. If an element is unreachable by role, add an `aria-label` to the
+  component instead of falling back to CSS.
+- Waiting: `expect(...).toBeVisible()` / `page.waitForURL()`. Never
+  `page.waitForTimeout()`.
+- Data: stamp records with `` `e2e-...-${Date.now()}` `` **and** delete them
+  before the test ends. Cleanup runs under the same session that created the
+  data, because Supabase RLS would otherwise hide the rows.
+- Name each test after the risk it protects, citing the §2 risk number.
+- Boundaries: keep auth, routing, own API routes, the database, AND
+  OpenRouter real — a browser-side `page.route()` mock of `/api/generate`
+  does not work for a persistence test, because that endpoint already wrote
+  the model's real text to the database before curation ran; a rewritten
+  marker would exist only in client state (see `e2e/E2E-RULES.md`). To get a
+  marker into the database, edit the draft card before saving.
+- Anonymous tests opt out of the shared session with
+  `test.use({ storageState: { cookies: [], origins: [] } })`.
+- Canonical examples: `e2e/seed.spec.ts` (deck CRUD persistence),
+  `e2e/generation-persistence.spec.ts` (risks #1/#2),
+  `e2e/auth-gate.spec.ts` (risk #6).
+
+### 6.7 Per-rollout-phase notes
 
 (Filled in as phases ship.)
 
@@ -244,7 +277,16 @@ contributors should respect these unless the underlying assumption changes.
 
 - **UI look and feel** — visual appearance, layout, and styling. Re-evaluate if user research surfaces repeated confusion. (Source: interview Q5.)
 - **Configuration plumbing** — wrangler config, Supabase config, env var wiring, CI YAML scaffolding in isolation. These are verified by the build step; do not add dedicated config tests. (Source: interview Q5.)
-- **Infrastructure overinvestment** — e2e browser flows, visual regression suites, multimodal review hooks. Integration tests catch most regressions at far lower maintenance cost. (Source: interview Q5; cost × signal principle.)
+- **Infrastructure overinvestment** — visual regression suites and multimodal
+  review hooks. Integration tests catch most regressions at far lower
+  maintenance cost. (Source: interview Q5; cost × signal principle.)
+  **Amended 2026-09-04:** e2e browser flows are no longer excluded. A
+  deliberately small Playwright suite now covers the two risks that no
+  cheaper layer can prove — persistence of generated cards across a reload
+  (#1/#2) and the auth gate on product routes (#6) — because both cross
+  auth → API → database → server render. The exclusion still holds in
+  spirit: e2e stays the last resort, not the default, and stays capped at a
+  handful of highest-risk paths.
 - **Generated/third-party code** — ts-fsrs algorithm internals, shadcn/ui components, Supabase SDK internals. Test the contract at the boundary, not the library. (Source: cost × signal principle.)
 
 ---
