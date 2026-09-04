@@ -8,6 +8,7 @@ export default defineConfig({
   test: {
     environment: "node",
     passWithNoTests: true,
+    exclude: ["**/node_modules/**", "**/e2e/**"],
   },
   resolve: {
     alias: {
