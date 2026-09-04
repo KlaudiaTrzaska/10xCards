@@ -10,6 +10,8 @@ This file provides guidance to AI Agent when working with code in this repositor
 - `npm run lint` — ESLint with type-checked rules
 - `npm run lint:fix` — auto-fix lint issues
 - `npm run format` — Prettier (includes prettier-plugin-astro + prettier-plugin-tailwindcss)
+- `npm test` — Vitest unit/integration suite
+- `npm run test:e2e` — Playwright E2E suite (needs `E2E_EMAIL` / `E2E_PASSWORD`)
 
 Pre-commit hooks: husky + lint-staged runs `eslint --fix` on `*.{ts,tsx,astro}` and `prettier --write` on `*.{json,css,md}`.
 
@@ -40,6 +42,16 @@ Full server-side rendering (`output: "server"` in astro.config.mjs). All pages a
 - **React**: no Next.js directives ("use client" etc.). Extract hooks to `src/components/hooks/`.
 - **Services/helpers** go in `src/lib/` (or `src/lib/services/` for extracted business logic).
 - **Shared types** (entities, DTOs) go in `src/types.ts`.
+- **E2E tests**: live in `e2e/`. Before writing or editing one, read
+  `e2e/E2E-RULES.md` and follow `e2e/seed.spec.ts` as the canonical pattern.
+  Hard rules: `getByRole`/`getByLabel` over CSS selectors; never
+  `page.waitForTimeout()`; every test independent, with unique
+  `Date.now()`-stamped data and its own cleanup; name each test after the risk
+  it protects from `context/foundation/test-plan.md`; keep auth/API/database
+  real — a browser-side LLM mock does not persist, since `/api/generate`
+  writes the model's real text to the database before curation runs (see
+  `e2e/generation-persistence.spec.ts`). Icon-only buttons need an
+  `aria-label` so they stay reachable by role.
 
 ### Environment
 

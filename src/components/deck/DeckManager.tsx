@@ -208,6 +208,7 @@ export default function DeckManager() {
                           type="button"
                           disabled={isLocked}
                           title={isLocked ? "Locked after first review" : "Edit card"}
+                          aria-label={isLocked ? "Locked after first review" : "Edit card"}
                           onClick={() => {
                             setModalState({ open: true, mode: "edit", card });
                           }}
@@ -224,6 +225,7 @@ export default function DeckManager() {
                           type="button"
                           disabled={isLocked}
                           title={isLocked ? "Locked after first review" : "Delete card"}
+                          aria-label={isLocked ? "Locked after first review" : "Delete card"}
                           onClick={() => {
                             setDeleteError(null);
                             setDeleteTarget(card);
