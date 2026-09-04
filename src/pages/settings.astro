@@ -1,0 +1,35 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Topbar from "@/components/Topbar.astro";
+import { DeleteAccountForm } from "@/components/settings/DeleteAccountForm";
+
+const { user } = Astro.locals;
+---
+
+<Layout title="Settings — 10xCards">
+  <div class="bg-cosmic relative min-h-screen w-full overflow-hidden">
+    <div
+      class="pointer-events-none absolute top-1/4 -left-24 h-[350px] w-[350px] rounded-full bg-purple-500/20 blur-[120px]"
+    >
+    </div>
+    <div
+      class="pointer-events-none absolute top-2/3 -right-16 h-[250px] w-[250px] rounded-full bg-blue-500/15 blur-[100px]"
+    >
+    </div>
+
+    <div class="relative z-10 p-4 sm:p-8">
+      <Topbar />
+
+      <div class="mx-auto max-w-2xl px-4 py-12">
+        <h1 class="mb-8 text-2xl font-bold text-white">Account Settings</h1>
+
+        <div class="mb-4 rounded-xl border border-white/10 bg-white/5 px-6 py-4">
+          <p class="text-sm text-white/50">Signed in as</p>
+          <p class="text-sm font-medium text-white">{user?.email}</p>
+        </div>
+
+        <DeleteAccountForm userEmail={user?.email ?? ""} client:load />
+      </div>
+    </div>
+  </div>
+</Layout>
